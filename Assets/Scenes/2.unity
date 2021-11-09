@@ -213,13 +213,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6180052872278748814, guid: b64c784ee23dbdf4f883d612deaef7cb, type: 3}
+      propertyPath: leadsTo
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6180052872278748814, guid: b64c784ee23dbdf4f883d612deaef7cb, type: 3}
+      propertyPath: teleportName
+      value: 1-2
+      objectReference: {fileID: 0}
     - target: {fileID: 6180052872278748815, guid: b64c784ee23dbdf4f883d612deaef7cb, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6180052872278748815, guid: b64c784ee23dbdf4f883d612deaef7cb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.54
+      value: -9.37
       objectReference: {fileID: 0}
     - target: {fileID: 6180052872278748815, guid: b64c784ee23dbdf4f883d612deaef7cb, type: 3}
       propertyPath: m_LocalPosition.y

@@ -5,15 +5,28 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed;
-    Vector2 moveDirection;
     Rigidbody2D rb;
     Animator playerAnimator;
+    public static PlayerController instance;
+    Transform trnsfrm;
+
+    public string teleportCameFrom ="";
 
 
     private void Start()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         DontDestroyOnLoad(gameObject);
         rb = GetComponent<Rigidbody2D>();
+        trnsfrm = GetComponent<Transform>();
         playerAnimator = GetComponent<Animator>();
     }
 
@@ -33,7 +46,12 @@ public class PlayerController : MonoBehaviour
 
         playerAnimator.SetFloat("moveX", rb.velocity.x);
         playerAnimator.SetFloat("moveY", rb.velocity.y);
-        
-        
+               
+    }
+
+    public void JumpToPoint(Transform target)
+    {
+        Debug.Log("Jumping from"+trnsfrm+"to"+target);
+        trnsfrm.position = target.position;
     }
 }
