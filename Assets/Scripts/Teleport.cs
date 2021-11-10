@@ -13,9 +13,12 @@ public class Teleport : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (PlayerController.instance.teleportCameFrom == teleportName)
+        if (PlayerController.instance != null)
         {
-            PlayerController.instance.JumpToPoint(pointOfExit);
+            if (PlayerController.instance.teleportCameFrom == teleportName)
+            {
+                PlayerController.instance.JumpToPoint(pointOfExit);
+            }
         }
         
     }
