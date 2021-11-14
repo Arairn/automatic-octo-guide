@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+//using UnityEngine.SceneManagement;
 
 public class Teleport : MonoBehaviour
 
@@ -10,7 +9,9 @@ public class Teleport : MonoBehaviour
     public string leadsTo;
     public Transform pointOfExit;
     public bool doubleway = true;
-    // Start is called before the first frame update
+
+    public static event Action IsTeleporting;
+
     void Start()
     {
         if (PlayerController.instance != null)
@@ -18,21 +19,25 @@ public class Teleport : MonoBehaviour
             if (PlayerController.instance.teleportCameFrom == teleportName)
             {
                 PlayerController.instance.JumpToPoint(pointOfExit);
+                IsTeleporting?.Invoke();
             }
         }
-        
+
     }
+
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player"&&doubleway)
+        if (collision.tag == "Player" && doubleway)
         {
-            SceneManager.LoadScene(leadsTo);
+
+            GameObject.FindWithTag("LevelLoader").GetComponent<LevelLoader>().LeavingScene(leadsTo);
+            //SceneManager.LoadScene(leadsTo);
             PlayerController.instance.teleportCameFrom = teleportName;
         }
 
