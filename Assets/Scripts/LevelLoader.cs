@@ -11,6 +11,7 @@ public class LevelLoader : MonoBehaviour
 
     private void Start()
     {
+        
         image.SetActive(true);
         sceneAnimator = GetComponentInChildren<Animator>();
     }

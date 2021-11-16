@@ -39,6 +39,7 @@ public class Teleport : MonoBehaviour
             GameObject.FindWithTag("LevelLoader").GetComponent<LevelLoader>().LeavingScene(leadsTo);
             //SceneManager.LoadScene(leadsTo);
             PlayerController.instance.teleportCameFrom = teleportName;
+            
         }
 
     }

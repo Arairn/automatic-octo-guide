@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public static PlayerController instance;
     Transform trnsfrm;
     Vector3 bottomLeftLimit, topRightLimit;
+    public bool canMove = true;
 
     public string teleportCameFrom = "";
 
@@ -31,7 +32,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized * moveSpeed;
+        if (canMove) rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized * moveSpeed;
+        else rb.velocity = Vector3.zero;
         if (rb.velocity.SqrMagnitude() >= 0.01f)
         {
             playerAnimator.SetBool("isMoving", true);
@@ -61,5 +63,14 @@ public class PlayerController : MonoBehaviour
     {
         bottomLeftLimit = botLeft;
         topRightLimit = topRight;
+    }
+
+    public void StopMoving()
+    {
+        canMove = false;
+    }
+    public void StartMoving()
+    {
+        canMove = true;
     }
 }
