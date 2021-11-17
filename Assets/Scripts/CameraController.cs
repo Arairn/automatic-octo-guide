@@ -21,10 +21,12 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         SetTarget(PlayerController.instance.transform);
-        Teleport.IsTeleporting += InstantJumpToPlayer;
+        
+        
+        Teleport.IsTeleporting += InstantJumpToPlayer; //Это срабатывает, когда в начале новой сцены игрока кидает к нужному телепорту. 
 
 
-        InstantJumpToPlayer();
+        InstantJumpToPlayer();//это срабатывает в самом начале игры, когда события нет, но камеру все же нужно прицепить к игроку
 
 
         map = GameObject.FindWithTag("map").GetComponent<Tilemap>();

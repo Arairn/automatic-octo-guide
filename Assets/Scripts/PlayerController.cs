@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
             Destroy(gameObject);
         }
 
-        DontDestroyOnLoad(gameObject);
+        
         rb = GetComponent<Rigidbody2D>();
         trnsfrm = GetComponent<Transform>();
         playerAnimator = GetComponent<Animator>();

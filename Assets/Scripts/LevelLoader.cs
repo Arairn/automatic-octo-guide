@@ -11,9 +11,10 @@ public class LevelLoader : MonoBehaviour
 
     private void Start()
     {
-        
+        GameManager.instance.fadingbetweenAreas = true;
         image.SetActive(true);
         sceneAnimator = GetComponentInChildren<Animator>();
+        StartCoroutine(StartNewScene());
     }
     public void LeavingScene(string LevelName)
     {
@@ -22,8 +23,15 @@ public class LevelLoader : MonoBehaviour
 
     IEnumerator LoadNewScene(string NextLevelName)
     {
+        GameManager.instance.fadingbetweenAreas = true;
         sceneAnimator.SetTrigger("Start");
         yield return new WaitForSeconds(transitionTime);
         SceneManager.LoadScene(NextLevelName);
+    }
+    IEnumerator StartNewScene()
+    {
+        
+        yield return new WaitForSeconds(transitionTime);
+        GameManager.instance.fadingbetweenAreas = false;
     }
 }
