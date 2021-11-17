@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -11,6 +12,8 @@ public class PlayerController : MonoBehaviour
     public bool canMove = true;
 
     public string teleportCameFrom = "";
+
+    public static event Action IsTeleporting;
 
 
     private void Start()
@@ -58,6 +61,7 @@ public class PlayerController : MonoBehaviour
     {
         //Debug.Log("Jumping from"+trnsfrm+"to"+target);
         trnsfrm.position = target.position;
+        IsTeleporting?.Invoke();
     }
     public void SetBounds(Vector3 botLeft, Vector3 topRight)
     {
@@ -68,6 +72,7 @@ public class PlayerController : MonoBehaviour
     public void StopMoving()
     {
         canMove = false;
+        IsTeleporting?.Invoke();
     }
     public void StartMoving()
     {

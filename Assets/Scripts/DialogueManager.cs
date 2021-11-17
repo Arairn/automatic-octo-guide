@@ -27,7 +27,7 @@ public class DialogueManager : MonoBehaviour
                 else
                 {
                     dialogueSystem.SetActive(false);
-                    PlayerController.instance.StartMoving();
+                    GameManager.instance.dialogueActive = false;
                 }
             }
             else
@@ -52,7 +52,7 @@ public class DialogueManager : MonoBehaviour
         nameBox.SetActive(true);
         ShowLine();
         justStarted = true;
-        PlayerController.instance.StopMoving();
+        GameManager.instance.dialogueActive = true;
     }
     void CheckIfName()
     {

@@ -23,7 +23,7 @@ public class CameraController : MonoBehaviour
         SetTarget(PlayerController.instance.transform);
         
         
-        Teleport.IsTeleporting += InstantJumpToPlayer; //Это срабатывает, когда в начале новой сцены игрока кидает к нужному телепорту. 
+        PlayerController.IsTeleporting += InstantJumpToPlayer; //Это срабатывает, когда в начале новой сцены игрока кидает к нужному телепорту. 
 
 
         InstantJumpToPlayer();//это срабатывает в самом начале игры, когда события нет, но камеру все же нужно прицепить к игроку
@@ -38,7 +38,7 @@ public class CameraController : MonoBehaviour
         SetMapBoundaries();
 
     }
-    private void OnDestroy() => Teleport.IsTeleporting -= InstantJumpToPlayer;
+    private void OnDestroy() => PlayerController.IsTeleporting -= InstantJumpToPlayer;
 
 
     private void InstantJumpToPlayer()
@@ -52,16 +52,25 @@ public class CameraController : MonoBehaviour
     }
 
     // Update is called once per frame
+
+    private void Update()
+    {
+        x = Mathf.Clamp(transform.position.x, bottomLeftLimit.x + halfWidth, topRightLimit.x - halfWidth);
+        y = Mathf.Clamp(transform.position.y, bottomLeftLimit.y + halfheight, topRightLimit.y - halfheight);
+
+        transform.position = new Vector3(x, y, transform.position.z);
+    }
+
     void FixedUpdate()
     {
         targetCamPosition = new Vector3(target.position.x, target.position.y, transform.position.z);
         currentPosition = transform.position;
 
         transform.position = Vector3.Lerp(currentPosition, targetCamPosition, Time.deltaTime * cameraSpeed);
-        x = Mathf.Clamp(transform.position.x, bottomLeftLimit.x + halfWidth, topRightLimit.x - halfWidth);
-        y = Mathf.Clamp(transform.position.y, bottomLeftLimit.y + halfheight, topRightLimit.y - halfheight);
+        //x = Mathf.Clamp(transform.position.x, bottomLeftLimit.x + halfWidth, topRightLimit.x - halfWidth);
+        //y = Mathf.Clamp(transform.position.y, bottomLeftLimit.y + halfheight, topRightLimit.y - halfheight);
 
-        transform.position = new Vector3(x, y, transform.position.z);
+        //transform.position = new Vector3(x, y, transform.position.z);
     }
 
     void SetMapBoundaries()

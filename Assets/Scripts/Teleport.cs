@@ -10,7 +10,7 @@ public class Teleport : MonoBehaviour
     public Transform pointOfExit;
     public bool doubleway = true;
 
-    public static event Action IsTeleporting;
+    
 
     void Start()
     {
@@ -19,7 +19,7 @@ public class Teleport : MonoBehaviour
             if (PlayerController.instance.teleportCameFrom == teleportName)
             {
                 PlayerController.instance.JumpToPoint(pointOfExit);
-                IsTeleporting?.Invoke();
+                
             }
         }
 
