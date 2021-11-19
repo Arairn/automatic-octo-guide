@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     Animator playerAnimator;
     public static PlayerController instance;
-    Transform trnsfrm;
+    public Transform transformPlayer;
     Vector3 bottomLeftLimit, topRightLimit;
     public bool canMove = true;
 
@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
 
         
         rb = GetComponent<Rigidbody2D>();
-        trnsfrm = GetComponent<Transform>();
+        transformPlayer = GetComponent<Transform>();
         playerAnimator = GetComponent<Animator>();
     }
 
@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
     public void JumpToPoint(Transform target)
     {
         //Debug.Log("Jumping from"+trnsfrm+"to"+target);
-        trnsfrm.position = target.position;
+        transformPlayer.position = target.position;
         IsTeleporting?.Invoke();
     }
     public void SetBounds(Vector3 botLeft, Vector3 topRight)

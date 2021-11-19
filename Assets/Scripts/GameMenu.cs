@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameMenu : MonoBehaviour
 {
     public GameObject MenuSystem;
+    public GameObject[] windows;
     Charstats charstats;
     public SliderInfo hp;
     public SliderInfo mp;
@@ -23,8 +24,7 @@ public class GameMenu : MonoBehaviour
         {
             if (MenuSystem.activeInHierarchy)
             {
-                MenuSystem.SetActive(false);
-                GameManager.instance.gameMenuOpen = false;
+                CloseMenu();
             }
             else
             {
@@ -37,8 +37,32 @@ public class GameMenu : MonoBehaviour
     }
     void RefreshMenu()
     {
-        hp.SetValues(charstats.currentHP, charstats.maxHP);
-        mp.SetValues(charstats.currentMP, charstats.maxMP);
+        hp.SetValues(charstats.playerBattleChars.currentHP, charstats.playerBattleChars.maxHP);
+        mp.SetValues(charstats.playerBattleChars.currentMP, charstats.playerBattleChars.maxMP);
         exp.SetValues(charstats.currentEXP, charstats.expToNextLevel[charstats.currentLevel]);
+    }
+    public void ToggleWindow(int number)
+    {
+        for (int i = 0; i < windows.Length; i++)
+        {
+            if (i == number)
+            {
+                windows[i].SetActive(!windows[i].activeInHierarchy);
+            }
+            else
+            {
+                windows[i].SetActive(false);
+            }
+        }
+    }
+
+    public void CloseMenu()
+    {
+        for (int i = 0; i < windows.Length; i++)
+        {
+            windows[i].SetActive(false);
+        }
+        MenuSystem.SetActive(false);
+        GameManager.instance.gameMenuOpen = false;
     }
 }

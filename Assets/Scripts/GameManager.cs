@@ -5,18 +5,21 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    public BattleChars playerBattleChars;
 
-    public bool gameMenuOpen, dialogueActive, fadingbetweenAreas;
+    public bool gameMenuOpen, dialogueActive, fadingbetweenAreas, battleIsActive;
     // Start is called before the first frame update
     void Start()
     {
         if (instance == null) instance = this;
+
+        playerBattleChars = GetComponent<BattleChars>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (gameMenuOpen || dialogueActive || fadingbetweenAreas) PlayerController.instance.StopMoving();
+        if (gameMenuOpen || dialogueActive || fadingbetweenAreas || battleIsActive) PlayerController.instance.StopMoving();
         else PlayerController.instance.StartMoving();
     }
 

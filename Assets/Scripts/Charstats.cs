@@ -10,7 +10,10 @@ public class Charstats : MonoBehaviour
     const int maxLevel = 50;
     const int baseEXP = 1000;
 
-    public int currentHP, maxHP, currentMP, maxMP;
+    public BattleChars playerBattleChars;
+    
+
+    //public int currentHP, maxHP, currentMP, maxMP;
     public int strength, defence, weaponPWR, armorPWR;
 
     public string equippedWeapon, equippedArmor;
@@ -24,15 +27,15 @@ public class Charstats : MonoBehaviour
     public Charstats()
     {
         currentLevel = 1;
-        maxHP = 100;
-        currentHP = maxHP;
-        maxMP = 30;
+        //maxHP = 100;
+        //currentHP = maxHP;
+        //maxMP = 30;
     }
     public Charstats(int level, int maximumHP, int maximumMP, Sprite characterImage)
     {
         currentLevel = level;
-        maxHP = maximumHP;
-        maxMP = maximumMP;
+        //maxHP = maximumHP;
+        //maxMP = maximumMP;
         charImage = characterImage;
         if (level >= maxLevel) maxLevelIsReached = true;
     }
@@ -40,6 +43,8 @@ public class Charstats : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        //playerBattleChars = GetComponent<BattleChars>();
         expToNextLevel = new int[maxLevel];
         expToNextLevel[1] = baseEXP;
         for (int i = 2; i < maxLevel; i++)
@@ -51,10 +56,12 @@ public class Charstats : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.K))
         {
             AddExp(1000);
         }
+#endif
     }
 
     public void AddExp(int expAmount)
@@ -87,9 +94,7 @@ public class Charstats : MonoBehaviour
     {
         strength++;
         defence++;
-        maxHP += 5;
-        currentHP = maxHP;
-        maxMP += 2;
-        currentMP = maxMP;
+        playerBattleChars.LevelUp(currentLevel);
+
     }
 }

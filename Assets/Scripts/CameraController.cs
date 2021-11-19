@@ -55,15 +55,20 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        x = Mathf.Clamp(transform.position.x, bottomLeftLimit.x + halfWidth, topRightLimit.x - halfWidth);
-        y = Mathf.Clamp(transform.position.y, bottomLeftLimit.y + halfheight, topRightLimit.y - halfheight);
+        //x = Mathf.Clamp(transform.position.x, bottomLeftLimit.x + halfWidth, topRightLimit.x - halfWidth);
+        //y = Mathf.Clamp(transform.position.y, bottomLeftLimit.y + halfheight, topRightLimit.y - halfheight);
 
-        transform.position = new Vector3(x, y, transform.position.z);
+        //transform.position = new Vector3(x, y, transform.position.z);
     }
 
     void FixedUpdate()
     {
-        targetCamPosition = new Vector3(target.position.x, target.position.y, transform.position.z);
+        x = Mathf.Clamp(target.position.x, bottomLeftLimit.x + halfWidth, topRightLimit.x - halfWidth);
+        y = Mathf.Clamp(target.position.y, bottomLeftLimit.y + halfheight, topRightLimit.y - halfheight);
+
+        //transform.position = new Vector3(x, y, transform.position.z);
+
+        targetCamPosition = new Vector3(x, y, transform.position.z);
         currentPosition = transform.position;
 
         transform.position = Vector3.Lerp(currentPosition, targetCamPosition, Time.deltaTime * cameraSpeed);

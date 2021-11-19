@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 1482630742}
   - component: {fileID: 3353939951972038115}
   - component: {fileID: 1482630743}
+  - component: {fileID: 858517637}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -142,6 +143,7 @@ MonoBehaviour:
   moveSpeed: 8
   x: 0
   y: 0
+  transformPlayer: {fileID: 0}
   canMove: 1
   teleportCameFrom: 
 --- !u!114 &9138296558039642919
@@ -187,9 +189,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 167ffda39e064234f928ea3bcf59e067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerBattleChars: {fileID: 0}
   gameMenuOpen: 0
   dialogueActive: 0
   fadingbetweenAreas: 0
+  battleIsActive: 0
 --- !u!114 &3353939951972038115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,10 +210,7 @@ MonoBehaviour:
   currentLevel: 1
   currentEXP: 0
   expToNextLevel: 
-  currentHP: 100
-  maxHP: 100
-  currentMP: 0
-  maxMP: 30
+  playerBattleChars: {fileID: 0}
   strength: 0
   defence: 0
   weaponPWR: 0
@@ -229,3 +230,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f44814732cd1ab94182c63c624830ad0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &858517637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5642653163585801802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1f69fbdb67a7ba409fd1ea64039514c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPlayer: 1
+  charName: Necro
+  movesAvailable: []
+  currentHP: 100
+  maxHP: 100
+  currentMP: 30
+  maxMP: 30
+  strength: 3
+  defence: 1
+  weaponPWR: 1
+  armorPWR: 1
+  hasDied: 0
