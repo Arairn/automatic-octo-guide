@@ -11,10 +11,11 @@ public class Charstats : MonoBehaviour
     const int baseEXP = 1000;
 
     public BattleChars playerBattleChars;
-    
+
 
     //public int currentHP, maxHP, currentMP, maxMP;
-    public int strength, defence, weaponPWR, armorPWR;
+    //public CharacterStat Defence = new CharacterStat(5);
+    //public int strength, defence, weaponPWR, armorPWR;
 
     public string equippedWeapon, equippedArmor;
 
@@ -24,27 +25,13 @@ public class Charstats : MonoBehaviour
 
 
 
-    public Charstats()
-    {
-        currentLevel = 1;
-        //maxHP = 100;
-        //currentHP = maxHP;
-        //maxMP = 30;
-    }
-    public Charstats(int level, int maximumHP, int maximumMP, Sprite characterImage)
-    {
-        currentLevel = level;
-        //maxHP = maximumHP;
-        //maxMP = maximumMP;
-        charImage = characterImage;
-        if (level >= maxLevel) maxLevelIsReached = true;
-    }
 
     // Start is called before the first frame update
     void Start()
     {
 
-        //playerBattleChars = GetComponent<BattleChars>();
+        playerBattleChars = GameManager.instance.playerBattleChars;
+        //Debug.Log(playerBattleChars.maxHP);
         expToNextLevel = new int[maxLevel];
         expToNextLevel[1] = baseEXP;
         for (int i = 2; i < maxLevel; i++)
@@ -92,9 +79,9 @@ public class Charstats : MonoBehaviour
     }
     void LevelUp()
     {
-        strength++;
-        defence++;
-        playerBattleChars.LevelUp(currentLevel);
+        //strength++;
+        //defence++;
+        GameManager.instance.playerBattleChars.LevelUp(currentLevel);
 
     }
 }

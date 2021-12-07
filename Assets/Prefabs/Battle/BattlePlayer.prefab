@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1593176626083313258}
   - component: {fileID: 529939663908406180}
-  - component: {fileID: 9007712597938515662}
   - component: {fileID: 2865289251034251552}
   m_Layer: 0
   m_Name: BattlePlayer
@@ -72,7 +71,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1948077977
   m_SortingLayer: 3
-  m_SortingOrder: 1
+  m_SortingOrder: 5
   m_Sprite: {fileID: -3303779423006393323, guid: 7ff60c873af6b5247b48cf8e47ac162f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -84,30 +83,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &9007712597938515662
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1417318644444457684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1f69fbdb67a7ba409fd1ea64039514c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isPlayer: 1
-  charName: 
-  movesAvailable: []
-  currentHP: 50
-  maxHP: 100
-  currentMP: 0
-  maxMP: 0
-  strength: 0
-  defence: 0
-  weaponPWR: 0
-  armorPWR: 0
-  hasDied: 0
 --- !u!114 &2865289251034251552
 MonoBehaviour:
   m_ObjectHideFlags: 0

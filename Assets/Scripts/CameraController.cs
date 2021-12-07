@@ -43,7 +43,10 @@ public class CameraController : MonoBehaviour
 
     private void InstantJumpToPlayer()
     {
-        transform.position = new Vector3(target.position.x, target.position.y, transform.position.z);
+        x = Mathf.Clamp(target.position.x, bottomLeftLimit.x + halfWidth, topRightLimit.x - halfWidth);
+        y = Mathf.Clamp(target.position.y, bottomLeftLimit.y + halfheight, topRightLimit.y - halfheight);
+        transform.position = new Vector3(x, y, transform.position.z);
+
     }
 
     public void SetTarget(Transform newTarget)
@@ -77,6 +80,8 @@ public class CameraController : MonoBehaviour
 
         //transform.position = new Vector3(x, y, transform.position.z);
     }
+
+
 
     void SetMapBoundaries()
     {

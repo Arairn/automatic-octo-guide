@@ -34,4 +34,15 @@ public class LevelLoader : MonoBehaviour
         yield return new WaitForSeconds(transitionTime);
         GameManager.instance.fadingbetweenAreas = false;
     }
+
+    public IEnumerator BlackAndGone()
+    {
+        GameManager.instance.fadingbetweenAreas = true;
+        sceneAnimator.SetTrigger("Start");
+        yield return new WaitForSeconds(transitionTime);
+        sceneAnimator.SetTrigger("OutOfBlack");
+        yield return new WaitForSeconds(transitionTime);
+        GameManager.instance.fadingbetweenAreas = false;
+    }
+
 }

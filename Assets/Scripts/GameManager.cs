@@ -12,8 +12,14 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         if (instance == null) instance = this;
+        LinkToBattleChars();
 
+
+    }
+    public void LinkToBattleChars()
+    {
         playerBattleChars = GetComponent<BattleChars>();
+        Debug.Log("Is linking to " + GetComponent<BattleChars>());
     }
 
     // Update is called once per frame
@@ -23,7 +29,14 @@ public class GameManager : MonoBehaviour
         else PlayerController.instance.StartMoving();
     }
 
-    
+
+
+        public void ReturnFromBattle()
+    {
+        GetComponent<PlayerBattleInfoPrefabUpdater>().Renew(false);
+        //instance.playerBattleChars = gameObject.AddComponent(BattleManager.instance.activeBattlers[0]);
+
+    }
 
     
 }

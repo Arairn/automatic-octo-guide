@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 3353939951972038115}
   - component: {fileID: 1482630743}
   - component: {fileID: 858517637}
+  - component: {fileID: 6089556240423281449}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -206,11 +207,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf10b1f972f9bec46bb896021cfd3051, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  charName: 
+  charName: Necro
   currentLevel: 1
   currentEXP: 0
   expToNextLevel: 
-  playerBattleChars: {fileID: 0}
+  playerBattleChars: {fileID: 858517637}
   strength: 0
   defence: 0
   weaponPWR: 0
@@ -243,9 +244,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayer: 1
-  charName: Necro
-  movesAvailable: []
-  currentHP: 100
+  name: Necro
   maxHP: 100
   currentMP: 30
   maxMP: 30
@@ -254,3 +253,23 @@ MonoBehaviour:
   weaponPWR: 1
   armorPWR: 1
   hasDied: 0
+  currentHP: 100
+  battleMoves:
+  - {fileID: 11400000, guid: 523cac00df24dd2408979830a53164ec, type: 2}
+  - {fileID: 11400000, guid: 62f02b3278e6dc24d813da890e78cd9f, type: 2}
+  spawnMoves: []
+  curseMoves: []
+  AliveSprite: {fileID: -3303779423006393323, guid: 7ff60c873af6b5247b48cf8e47ac162f, type: 3}
+  DeadSprite: {fileID: 8888318505984086984, guid: 7ff60c873af6b5247b48cf8e47ac162f, type: 3}
+--- !u!114 &6089556240423281449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5642653163585801802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4edd441cb87713f4784cd809a11413ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

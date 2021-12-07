@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5416885436753686894}
   - component: {fileID: 2842994833141305824}
   - component: {fileID: 5300439874399507045}
+  - component: {fileID: 3357446500776081855}
   m_Layer: 0
   m_Name: Spider
   m_TagString: Untagged
@@ -71,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1948077977
   m_SortingLayer: 3
-  m_SortingOrder: 1
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 988d560df8d322a468c97243cbfd76e8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -96,16 +97,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayer: 0
-  charName: Spider
-  currentHP: 15
+  name: Spider
   maxHP: 30
   currentMP: 0
   maxMP: 0
-  strength: 0
-  defence: 0
-  weaponPWR: 0
-  armorPWR: 0
+  strength: 3
+  defence: 1
+  weaponPWR: 1
+  armorPWR: 1
   hasDied: 0
+  currentHP: 15
   battleMoves:
   - {fileID: 11400000, guid: 62f02b3278e6dc24d813da890e78cd9f, type: 2}
   - {fileID: 11400000, guid: 4c81d13f71b3d96469ab5e20a25b7144, type: 2}
+  spawnMoves: []
+  curseMoves: []
+--- !u!114 &3357446500776081855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5406384722879437299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff52fc68e951af34ca6b41d5a174a6a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
