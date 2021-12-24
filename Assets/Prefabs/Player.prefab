@@ -16,10 +16,12 @@ GameObject:
   - component: {fileID: 9138296558039642919}
   - component: {fileID: 5642653163585801808}
   - component: {fileID: 1482630742}
+  - component: {fileID: 4397769712427159330}
   - component: {fileID: 3353939951972038115}
   - component: {fileID: 1482630743}
-  - component: {fileID: 858517637}
-  - component: {fileID: 6089556240423281449}
+  - component: {fileID: 1270306926621469506}
+  - component: {fileID: 3470812054192099072}
+  - component: {fileID: 3181410837442403885}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -190,11 +192,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 167ffda39e064234f928ea3bcf59e067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerBattleChars: {fileID: 0}
+  playerFacade: {fileID: 4397769712427159330}
+  playerBattleChars: {fileID: 3181410837442403885}
   gameMenuOpen: 0
   dialogueActive: 0
   fadingbetweenAreas: 0
   battleIsActive: 0
+--- !u!114 &4397769712427159330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5642653163585801802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d38a5a72e7389247bccedc3593203a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPlayer: 1
+  ExperienceSystem: {fileID: 1270306926621469506}
+  CharacterBattleStatsSystem: {fileID: 3181410837442403885}
+  CharacterInfo: {fileID: 3353939951972038115}
+  animationController: {fileID: 3470812054192099072}
+  AI: {fileID: 0}
+  buffSystem: {fileID: 0}
+  mayNotHaveBattleSystem: 0
+  ShouldBeLinkedWithPlayer: 0
 --- !u!114 &3353939951972038115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,17 +232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charName: Necro
-  currentLevel: 1
-  currentEXP: 0
-  expToNextLevel: 
-  playerBattleChars: {fileID: 858517637}
-  strength: 0
-  defence: 0
-  weaponPWR: 0
-  armorPWR: 0
-  equippedWeapon: 
-  equippedArmor: 
-  charImage: {fileID: 0}
+  isPlayer: 1
 --- !u!114 &1482630743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,7 +245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f44814732cd1ab94182c63c624830ad0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &858517637
+--- !u!114 &1270306926621469506
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -240,36 +254,59 @@ MonoBehaviour:
   m_GameObject: {fileID: 5642653163585801802}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1f69fbdb67a7ba409fd1ea64039514c, type: 3}
+  m_Script: {fileID: 11500000, guid: 62123d8349593b84c9e7724d9e752231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayer: 1
-  name: Necro
+  currentLevel: 0
+  currentEXP: 0
+  expToNextLevel: 
+--- !u!114 &3470812054192099072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5642653163585801802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a5f9b0fb2cccb6479b11abe8a12b2cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AliveSprite: {fileID: -3303779423006393323, guid: 7ff60c873af6b5247b48cf8e47ac162f, type: 3}
+  DeadSprite: {fileID: 8888318505984086984, guid: 7ff60c873af6b5247b48cf8e47ac162f, type: 3}
+--- !u!114 &3181410837442403885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5642653163585801802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2180da76275a9d4dbbba22287171337, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   maxHP: 100
   currentMP: 30
   maxMP: 30
-  strength: 3
-  defence: 1
-  weaponPWR: 1
-  armorPWR: 1
+  weaponPWR: 2
+  armorPWR: 3
   hasDied: 0
   currentHP: 100
-  battleMoves:
+  physicalPower:
+    BaseValue: 10
+  physicalDefence:
+    BaseValue: 5
+  magicPower:
+    BaseValue: 10
+  magicalDefence:
+    BaseValue: 5
+  physicalPenetration:
+    BaseValue: 0
+  magicalPenetration:
+    BaseValue: 0
+  damageMoves:
   - {fileID: 11400000, guid: 523cac00df24dd2408979830a53164ec, type: 2}
   - {fileID: 11400000, guid: 62f02b3278e6dc24d813da890e78cd9f, type: 2}
   spawnMoves: []
   curseMoves: []
-  AliveSprite: {fileID: -3303779423006393323, guid: 7ff60c873af6b5247b48cf8e47ac162f, type: 3}
-  DeadSprite: {fileID: 8888318505984086984, guid: 7ff60c873af6b5247b48cf8e47ac162f, type: 3}
---- !u!114 &6089556240423281449
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5642653163585801802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4edd441cb87713f4784cd809a11413ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -9,40 +9,40 @@ public class BattleManager : MonoBehaviour
 
     [Header("Battle Settings")]
     private bool battleIsActive;
-    public int currentTurn;
-    public bool turnWaiting;
-public GameObject battleScene;
+    public GameObject battleScene;
 
-    bool playerTurnJustStarted;
     [Header("Battle Visual")]
 
-       //Это все для включения боя
+    //Это все для включения боя
 
     public Transform[] playerPositions;
     public Transform[] enemyPositions;
-    float timeForEnemyToMove = 1f;
+    
     public DamageText damageText;
-    public MarkerJumper highLight;
+    
 
     [Header("Battle Math")]
 
     public GameObject playerPrefab;
-    public BattleChars[] playerPrefabs;
-    public BattleChars[] enemyPrefabs;
+    public CharacterFacade[] playerPrefabs;
+    public CharacterFacade[] enemyPrefabs;
 
-    public List<BattleChars> activeBattlers = new List<BattleChars>();
+    public List<CharacterFacade> activeBattlers = new List<CharacterFacade>();
     public List<int> activeBattlersFriendly = new List<int>();
     public List<int> activeBattlersEnemy = new List<int>();
 
-    public BattleChars player;
+    public CharacterFacade player;
     [Header("Battle UI")]
 
     //public GameObject uiButtons;
+    public BattleTurnManager battleTurnManager;
     public GameObject playerInfoParent, enemyInfoParent;
     public GameObject battlerInfo;
     public PlayerBattleMenu playerBattleMenu;
 
-    public static event Action BattlersHaveChanged, BattleHasEnded;
+    
+
+    public static event Action BattleHasEnded;
 
     void Start()
     {
@@ -50,6 +50,8 @@ public GameObject battleScene;
         {
             instance = this;
         }
+
+        BattleTurnManager.BattlersHaveChanged += UpdateBattle;
     }
 
     // Update is called once per frame
@@ -64,24 +66,6 @@ public GameObject battleScene;
         }
 #endif
 
-        if (battleIsActive)
-        {
-            if (turnWaiting)
-            {
-                if (activeBattlers[currentTurn].isPlayer)
-                {
-                    if (playerTurnJustStarted)
-                    {
-                        playerTurnJustStarted = false;
-                        PlayerTurn();
-                    }
-                }
-                else
-                {
-                    StartCoroutine(EnemyMove());
-                }
-            }
-        }
     }
 
     public void BattleStart(string[] enemiesToSpawn)
@@ -108,14 +92,14 @@ public GameObject battleScene;
             // Временная затычка для проверки геймплея. Затем, если можно будет обзавестись спутниками, нужно будет переделать как для врагов.
             GameObject newBattlePlayer = Instantiate(playerPrefab, playerPositions[0].position, playerPositions[0].rotation);
             newBattlePlayer.transform.parent = playerPositions[0];
-            newBattlePlayer.GetComponent<PlayerBattleInfoPrefabUpdater>().Renew(true);
-            player = newBattlePlayer.GetComponent<BattleChars>();
-
+            //newBattlePlayer.GetComponent<PlayerBattleInfoPrefabUpdater>().Renew(true);
+            player = newBattlePlayer.GetComponent<CharacterFacade>();
+            //player = GameManager.instance.playerFacade;
 
             activeBattlers.Add(player);
             //activeBattlersFriendly.Add(0);
             Instantiate(battlerInfo).GetComponent<BattlerInfoUpdater>().SetParams(0,playerInfoParent);
-            highLight.JumpTo(playerPositions[0]);
+            //highLight.JumpTo(playerPositions[0]);
             //highLight.transform.position = playerPositions[0].position;
 
 
@@ -130,9 +114,12 @@ public GameObject battleScene;
                 {
                     if (enemyPrefabs[j].name == enemiesToSpawn[i])
                     {
-                        Debug.Log("Добавляем " + enemyPrefabs[j].name);
+                        if (LogController.BattleSpawnLog)
+                        {
+                            Debug.Log("Добавляем " + enemyPrefabs[j].name);
+                        }
 
-                        BattleChars newEnemy = Instantiate(enemyPrefabs[j], enemyPositions[enemyPlacesToSpawn[i]].position, enemyPositions[enemyPlacesToSpawn[i]].rotation);
+                        CharacterFacade newEnemy = Instantiate(enemyPrefabs[j], enemyPositions[enemyPlacesToSpawn[i]].position, enemyPositions[enemyPlacesToSpawn[i]].rotation);
                         
                         newEnemy.transform.parent = enemyPositions[enemyPlacesToSpawn[i]];
 
@@ -145,32 +132,16 @@ public GameObject battleScene;
 
             }
 
-            currentTurn = 0;
-            turnWaiting = true;
-            BattlersHaveChanged?.Invoke();
+            
+
+            
             UpdateBattle();
-            PlayerTurn();
+            battleTurnManager.StartTurn(true);
         }
     }
 
-    public void nextTurn()
-    {
 
-        if (currentTurn >= activeBattlers.Count - 1)
-        {
-            currentTurn = 0;
-        }
-        else
-        {
-            currentTurn++;
-        }
-        highLight.JumpTo(activeBattlers[currentTurn].GetComponent<Transform>());
-        turnWaiting = true;
-        playerTurnJustStarted = true;
-        UpdateBattle();
-    }
-
-    private void UpdateBattle()
+    public void UpdateBattle()
     {
         bool allEnemiesAreDead = true;
         bool allPlayersAreDead = true;
@@ -180,14 +151,14 @@ public GameObject battleScene;
 
         for (int i = 0; i < activeBattlers.Count; i++)
         {
-            if (activeBattlers[i].currentHP <= 0)
+            if (activeBattlers[i].GetStat(CharacterStatsEnum.currentHP) <= 0)
             {
-                activeBattlers[i].SetSpriteToDead(true);
+                activeBattlers[i].SetToDead();
 
             }
             else
             {
-                activeBattlers[i].SetSpriteToDead(false);
+                activeBattlers[i].SetToRevived();
                 if (activeBattlers[i].isPlayer)
                 {
                     allPlayersAreDead = false;
@@ -205,26 +176,24 @@ public GameObject battleScene;
         {
             //End battle in lose
             //StartCoroutine(EndBattle());
+            Debug.Log("Поражение!");
             CloseBattle();
             return;
         }
 
         if (allEnemiesAreDead)
         {
-
+            Debug.Log("Победа!");
             //End battle in Victory
             CloseBattle();
         }
 
-        if (activeBattlers[currentTurn].currentHP == 0)
-        {
-            nextTurn();
-        }
     }
 
     private void CloseBattle()
     {
         if (battleIsActive) {
+            Debug.Log("Битва закончена");
             BattleHasEnded?.Invoke();
             GameManager.instance.ReturnFromBattle();
             StartCoroutine(GameObject.FindWithTag("LevelLoader").GetComponent<LevelLoader>().BlackAndGone());
@@ -234,75 +203,29 @@ public GameObject battleScene;
         
     }
 
-    public IEnumerator EnemyMove()
-    {
-        turnWaiting = false;
-        yield return new WaitForSeconds(timeForEnemyToMove);
-        EnemyAttack();
-        BattlersHaveChanged?.Invoke();
-        yield return new WaitForSeconds(timeForEnemyToMove);
-        nextTurn();
-    }
 
-    private void EnemyAttack()
-    {
-        BattleAI AI = activeBattlers[currentTurn].GetComponent<BattleAI>();
-        int target = AI.SelectTarget();
-        BattleMoves attack = AI.SelectAttack();
+    
 
-        CalculateDamage(target, attack);
 
-    }
-
-    public void CalculateDamage(int target, BattleMoves move)
-    {
-
-        move.DisplayMove(activeBattlers[target].transform);
-
-        float atkPwr = activeBattlers[currentTurn].strength + activeBattlers[currentTurn].weaponPWR;
-        float defPwr = activeBattlers[target].defence + activeBattlers[target].armorPWR;
-
-        float DamageDealt = atkPwr / defPwr * move.movePower * UnityEngine.Random.Range(0.8f, 1.2f);
-
-        DealDamage(target, DamageDealt);
-
-    }
-    public void DealDamage(int target, float damage)
-    {
-        DealDamage(target, Mathf.RoundToInt(damage));
-    }
-
-    public void DealDamage(int target, int damage)
-    {
-
-        Debug.Log(activeBattlers[currentTurn].name + " deals " + damage + " to " + activeBattlers[target].name);
-        activeBattlers[target].DealDamage(damage);
-        Instantiate(damageText, activeBattlers[target].transform.position, activeBattlers[target].transform.rotation).SetDamage(damage);
-        BattlersHaveChanged?.Invoke();
-
-    }
-
-    public void PlayerTurn()
-    {
-        playerBattleMenu.ShowButtons();
-
-    }
 
     IEnumerator EndBattle(float transitionTime)
     {
+        GameManager.instance.battleIsActive = false;
         //BattleHasEnded?.Invoke();
         yield return new WaitForSeconds(transitionTime);
-        GameManager.instance.LinkToBattleChars();
+        //GameManager.instance.LinkToBattleChars();
 
         
-        foreach (BattleChars item in activeBattlers)
+        foreach (var item in activeBattlers)
         {
+            Debug.Log("Удаляем " + item.gameObject.name+ " после битвы");
             Destroy(item.gameObject);
+            
         }
         battleScene.SetActive(false);
         
         yield return new WaitForSeconds(transitionTime);
-        GameManager.instance.battleIsActive = false;
+        //GameManager.instance.battleIsActive = false;
 
     }
 }

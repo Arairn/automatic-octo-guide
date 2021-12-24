@@ -14,13 +14,13 @@ public class BattlerInfoUpdater : MonoBehaviour
     public void SetParams(int i, GameObject parent)
     {
         battler = i;
-        nameText.text = BattleManager.instance.activeBattlers[battler].name;
-        if (BattleManager.instance.activeBattlers[battler].maxMP == 0)
+        nameText.text = BattleManager.instance.activeBattlers[battler].GetName();
+        if (BattleManager.instance.activeBattlers[battler].GetStat(CharacterStatsEnum.maxMP) == 0)
         {
             mp.gameObject.SetActive(false);
         }
         transform.SetParent(parent.transform);
-        BattleManager.BattlersHaveChanged += UpdateInfo;
+        BattleTurnManager.BattlersHaveChanged += UpdateInfo;
         BattleManager.BattleHasEnded += DestroyInfo;
 
 
@@ -30,10 +30,10 @@ public class BattlerInfoUpdater : MonoBehaviour
     public void UpdateInfo()
     {
 
-        hp.SetValues(BattleManager.instance.activeBattlers[battler].currentHP, BattleManager.instance.activeBattlers[battler].maxHP);
+        hp.SetValues(BattleManager.instance.activeBattlers[battler].GetStat(CharacterStatsEnum.currentHP), BattleManager.instance.activeBattlers[battler].GetStat(CharacterStatsEnum.maxHP));
         if (mp.gameObject.activeInHierarchy)
         {
-            mp.SetValues(BattleManager.instance.activeBattlers[battler].currentMP, BattleManager.instance.activeBattlers[battler].maxMP);
+            mp.SetValues(BattleManager.instance.activeBattlers[battler].GetStat(CharacterStatsEnum.currentMP), BattleManager.instance.activeBattlers[battler].GetStat(CharacterStatsEnum.maxMP));
         }
     }
 
@@ -47,7 +47,7 @@ public class BattlerInfoUpdater : MonoBehaviour
     }
     public void OnDestroy()
     {
-        BattleManager.BattlersHaveChanged -= UpdateInfo;
+        BattleTurnManager.BattlersHaveChanged -= UpdateInfo;
         BattleManager.BattleHasEnded -= DestroyInfo;
     }
 }

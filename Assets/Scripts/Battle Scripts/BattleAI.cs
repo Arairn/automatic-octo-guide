@@ -5,21 +5,35 @@ using UnityEngine;
 public class BattleAI : MonoBehaviour
 {
     int target,targetNumber;
-    public int SelectTarget()
+    CharacterFacade thisCharacterFacade;
+
+    private void Start()
+    {
+        thisCharacterFacade = GetComponent<CharacterFacade>();
+    }
+
+    CharacterFacade SelectTarget()
     {
         targetNumber = BattleManager.instance.activeBattlersFriendly[Random.Range(0, BattleManager.instance.activeBattlersFriendly.Count)];
         target = BattleManager.instance.activeBattlersFriendly[targetNumber];
-        return target;
+        return BattleManager.instance.activeBattlers[target];
     }
 
-    public BattleMoves SelectAttack()
+    BattleMoves SelectAttack()
     {
-        BattleMoves[] battlemovesAvaliable = BattleManager.instance.activeBattlers[BattleManager.instance.currentTurn].battleMoves;
-        int attack = Random.Range(0, battlemovesAvaliable.Length);
+        BattleMoves[] damagemovesAvaliable = BattleManager.instance.activeBattlers[BattleTurnManager.currentTurn].CharacterBattleStatsSystem.damageMoves;
+        int attack = Random.Range(0, damagemovesAvaliable.Length);
         //battlemovesAvaliable[attack].DisplayMove(BattleManager.instance.playerPositions[target]);
-        
-        Debug.Log(BattleManager.instance.activeBattlers[BattleManager.instance.currentTurn] + " had selected " + battlemovesAvaliable[attack].name + " and dealing " + battlemovesAvaliable[attack].movePower + " damage");
-        return battlemovesAvaliable[attack];
-    }    
+        if (LogController.BattleDamageLog)
+        {
+            Debug.Log(BattleManager.instance.activeBattlers[BattleTurnManager.currentTurn] + " had selected " + damagemovesAvaliable[attack].name + " and going to run it");
+        }
+            return damagemovesAvaliable[attack];
+    }
 
+    public void AITurn()
+    {
+        SelectAttack().ApplyMove(thisCharacterFacade,SelectTarget());
+        //BattleCalculator.instance.CalculateDamage(BattleTurnManager.currentTurn, SelectTarget(), SelectAttack());
+    }
 }

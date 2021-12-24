@@ -13,7 +13,17 @@ MonoBehaviour:
   m_Name: Slash
   m_EditorClassIdentifier: 
   name: Slash
-  movePower: 5
   manaCost: 0
   specialCost: 0
-  effect: {fileID: 6401704177270687760, guid: fe1522dadd87e904f86c3d0ccc3a1fe1, type: 3}
+  targetShouldBeSelected: 0
+  targetsAvialable: 0
+  visualEffectOnTarget: {fileID: 0}
+  elementaryEffects:
+  - damage: 5
+    typeOfDamage: 0
+    vampPercent: 0
+    manaDrain: 0
+    manaVampPercent: 0
+    bloodResourceRecovery: 0
+  elementaryBuffs: []
+  elementarySummon: []

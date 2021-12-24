@@ -10,8 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 5416885436753686894}
   - component: {fileID: 2842994833141305824}
-  - component: {fileID: 5300439874399507045}
   - component: {fileID: 8607325235184595903}
+  - component: {fileID: 3739099537478428459}
+  - component: {fileID: 4730100676419524432}
+  - component: {fileID: 2703328652034957170}
+  - component: {fileID: 7773582117636717828}
   m_Layer: 0
   m_Name: Eyeball
   m_TagString: Untagged
@@ -84,33 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5300439874399507045
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5406384722879437299}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1f69fbdb67a7ba409fd1ea64039514c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isPlayer: 0
-  name: Eyeball
-  maxHP: 20
-  currentMP: 0
-  maxMP: 0
-  strength: 2
-  defence: 1
-  weaponPWR: 2
-  armorPWR: 2
-  hasDied: 0
-  currentHP: 20
-  battleMoves:
-  - {fileID: 11400000, guid: 523cac00df24dd2408979830a53164ec, type: 2}
-  spawnMoves: []
-  curseMoves: []
 --- !u!114 &8607325235184595903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,3 +99,87 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff52fc68e951af34ca6b41d5a174a6a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3739099537478428459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5406384722879437299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d38a5a72e7389247bccedc3593203a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPlayer: 0
+  ExperienceSystem: {fileID: 0}
+  CharacterBattleStatsSystem: {fileID: 7773582117636717828}
+  CharacterInfo: {fileID: 4730100676419524432}
+  animationController: {fileID: 2703328652034957170}
+  AI: {fileID: 8607325235184595903}
+  buffSystem: {fileID: 0}
+  mayNotHaveBattleSystem: 0
+  ShouldBeLinkedWithPlayer: 0
+--- !u!114 &4730100676419524432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5406384722879437299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf10b1f972f9bec46bb896021cfd3051, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  charName: EyeBALL
+  isPlayer: 0
+--- !u!114 &2703328652034957170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5406384722879437299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a5f9b0fb2cccb6479b11abe8a12b2cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AliveSprite: {fileID: 21300010, guid: 988d560df8d322a468c97243cbfd76e8, type: 3}
+  DeadSprite: {fileID: 0}
+--- !u!114 &7773582117636717828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5406384722879437299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2180da76275a9d4dbbba22287171337, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 30
+  currentMP: 0
+  maxMP: 0
+  weaponPWR: 0
+  armorPWR: 0
+  hasDied: 0
+  currentHP: 30
+  physicalPower:
+    BaseValue: 5
+  physicalDefence:
+    BaseValue: 5
+  magicPower:
+    BaseValue: 5
+  magicalDefence:
+    BaseValue: 5
+  physicalPenetration:
+    BaseValue: 0
+  magicalPenetration:
+    BaseValue: 0
+  damageMoves:
+  - {fileID: 11400000, guid: 523cac00df24dd2408979830a53164ec, type: 2}
+  spawnMoves: []
+  curseMoves: []

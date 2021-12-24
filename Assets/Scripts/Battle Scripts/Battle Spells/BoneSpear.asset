@@ -12,9 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8330793dcadc9d1439f6b754199677b3, type: 3}
   m_Name: BoneSpear
   m_EditorClassIdentifier: 
-  type: 0
   name: Bone Spear
-  movePower: 10
   manaCost: 10
   specialCost: 1
+  targetShouldBeSelected: 0
+  targetsAvialable: 0
   visualEffectOnTarget: {fileID: 2479855763006821456, guid: c270c433de8995a4abb2a75aeda3b0eb, type: 3}
+  elementaryEffects:
+  - damage: 10
+    typeOfDamage: 1
+    vampPercent: 0
+    manaDrain: 0
+    manaVampPercent: 0
+    bloodResourceRecovery: 0
+  elementaryBuffs: []
+  elementarySummon: []

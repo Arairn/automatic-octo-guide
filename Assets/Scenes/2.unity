@@ -1487,17 +1487,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charName: 
-  currentLevel: 1
-  currentEXP: 0
-  expToNextLevel: 
-  playerBattleChars: {fileID: 0}
-  strength: 0
-  defence: 0
-  weaponPWR: 0
-  armorPWR: 0
-  equippedWeapon: 
-  equippedArmor: 
-  charImage: {fileID: 0}
+  isPlayer: 0
 --- !u!4 &240338860
 Transform:
   m_ObjectHideFlags: 0
@@ -2692,17 +2682,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charName: 
-  currentLevel: 1
-  currentEXP: 0
-  expToNextLevel: 
-  playerBattleChars: {fileID: 0}
-  strength: 0
-  defence: 0
-  weaponPWR: 0
-  armorPWR: 0
-  equippedWeapon: 
-  equippedArmor: 
-  charImage: {fileID: 0}
+  isPlayer: 0
 --- !u!4 &352738174
 Transform:
   m_ObjectHideFlags: 0
@@ -14044,6 +14024,70 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1287279936
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1287279939}
+  - component: {fileID: 1287279938}
+  - component: {fileID: 1287279937}
+  m_Layer: 0
+  m_Name: Debugger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1287279937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287279936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f44814732cd1ab94182c63c624830ad0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1287279938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287279936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5c4cd82e8d40d468c04504d8315af0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  battleDamageLog: 0
+  battleAnimationsLog: 0
+  battleMarkerLog: 0
+  ideas: 0
+  battleSpawnLog: 0
+  playerStatsMagicLog: 1
+  battleInterfaceLog: 1
+  battleTurns: 0
+--- !u!4 &1287279939
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287279936}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8.069176, y: 6.2698827, z: -560.58923}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1301246057
 GameObject:
   m_ObjectHideFlags: 0
@@ -14562,6 +14606,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   battleButtonsManager: {fileID: 1354153982}
   notification: {fileID: 3507708963860726689, guid: d3599b962cce89146b1ffcd77df2eb87, type: 3}
+  battleTurnManager: {fileID: 1611487009}
 --- !u!114 &1354153982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15444,6 +15489,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1507345606}
+  - component: {fileID: 1507345607}
   m_Layer: 0
   m_Name: GameObject (1)
   m_TagString: Untagged
@@ -15466,6 +15512,18 @@ Transform:
   m_Father: {fileID: 1978252448}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1507345607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1507345605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4330dbaab715154187817ac2d1a9735, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1507953771
 GameObject:
   m_ObjectHideFlags: 0
@@ -15679,6 +15737,8 @@ GameObject:
   - component: {fileID: 1611487008}
   - component: {fileID: 1611487007}
   - component: {fileID: 1611487006}
+  - component: {fileID: 1611487009}
+  - component: {fileID: 1611487010}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -15710,8 +15770,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee76167eb30ee524398dd038be9950c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentTurn: 0
-  turnWaiting: 0
   battleScene: {fileID: 1978252447}
   playerPositions:
   - {fileID: 1224681135}
@@ -15727,17 +15785,17 @@ MonoBehaviour:
   - {fileID: 550125071}
   - {fileID: 1908204309}
   damageText: {fileID: 8735485975263818303, guid: 54dbdec685f9a6443ba73a900c07721a, type: 3}
-  highLight: {fileID: 2011159690}
   playerPrefab: {fileID: 1417318644444457684, guid: 8bd03ffea4833b94296a3b6ace1ccc23, type: 3}
   playerPrefabs:
   - {fileID: 0}
   enemyPrefabs:
-  - {fileID: 5300439874399507045, guid: 499260ae16bab7248a44565ddf807440, type: 3}
-  - {fileID: 5300439874399507045, guid: a7ec38422cad99f478ddaf4179d5dce1, type: 3}
+  - {fileID: 3739099537478428459, guid: 499260ae16bab7248a44565ddf807440, type: 3}
+  - {fileID: 4003489931818986619, guid: a7ec38422cad99f478ddaf4179d5dce1, type: 3}
   activeBattlers: []
   activeBattlersFriendly: 
   activeBattlersEnemy: 
   player: {fileID: 0}
+  battleTurnManager: {fileID: 1611487009}
   playerInfoParent: {fileID: 935667987}
   enemyInfoParent: {fileID: 2123635410}
   battlerInfo: {fileID: 7718186057461979822, guid: 24013cd5bfe3b2b4a91af87983faf796, type: 3}
@@ -15757,6 +15815,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1611487009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1611487005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b67bc67bd7804a41becbc06d0507e24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerBattleMenu: {fileID: 1354153981}
+  highLight: {fileID: 1507345607}
+--- !u!114 &1611487010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1611487005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab877ae6b385b4245bfb99d34387ac78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  armorStats: {fileID: 11400000, guid: 35100ca2f3480ec46b1896797069ab2c, type: 2}
+  activeBattlers: []
 --- !u!1 &1637418335
 GameObject:
   m_ObjectHideFlags: 0
@@ -21608,7 +21694,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2011159689}
   - component: {fileID: 2011159688}
-  - component: {fileID: 2011159690}
   m_Layer: 0
   m_Name: SelectedMarker
   m_TagString: Untagged
@@ -21653,19 +21738,6 @@ Transform:
   m_Father: {fileID: 1507345606}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2011159690
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2011159687}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4330dbaab715154187817ac2d1a9735, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trnsfm: {fileID: 1507345606}
 --- !u!1 &2019194241
 GameObject:
   m_ObjectHideFlags: 0

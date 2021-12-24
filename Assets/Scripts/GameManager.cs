@@ -5,22 +5,30 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    public BattleChars playerBattleChars;
+    public CharacterFacade playerFacade;
+    public CharacterBattleStatsSystem playerBattleChars;
 
     public bool gameMenuOpen, dialogueActive, fadingbetweenAreas, battleIsActive;
     // Start is called before the first frame update
     void Start()
     {
         if (instance == null) instance = this;
-        LinkToBattleChars();
+        playerFacade = GetComponent<CharacterFacade>();
+        playerBattleChars = GetComponent<CharacterBattleStatsSystem>();
+        //LinkToBattleChars();
 
 
     }
+    /*
     public void LinkToBattleChars()
     {
-        playerBattleChars = GetComponent<BattleChars>();
-        Debug.Log("Is linking to " + GetComponent<BattleChars>());
+        playerBattleChars = GetComponent<CharacterBattleStatsSystem>();
+        if (LogController.PlayerStatsMagicLog)
+        {
+            Debug.Log("Is linking to " + GetComponent<CharacterBattleStatsSystem>());
+        }
     }
+    */
 
     // Update is called once per frame
     void Update()
@@ -33,7 +41,7 @@ public class GameManager : MonoBehaviour
 
         public void ReturnFromBattle()
     {
-        GetComponent<PlayerBattleInfoPrefabUpdater>().Renew(false);
+        //GetComponent<PlayerBattleInfoPrefabUpdater>().Renew(false);
         //instance.playerBattleChars = gameObject.AddComponent(BattleManager.instance.activeBattlers[0]);
 
     }

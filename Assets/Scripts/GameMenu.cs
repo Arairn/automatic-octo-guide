@@ -6,7 +6,7 @@ public class GameMenu : MonoBehaviour
 {
     public GameObject MenuSystem;
     public GameObject[] windows;
-    Charstats charstats;
+    CharacterFacade PlayerFacade;
     public SliderInfo hp;
     public SliderInfo mp;
     public SliderInfo exp;
@@ -14,7 +14,7 @@ public class GameMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        charstats = GameObject.FindWithTag("Player").GetComponent<Charstats>();
+        PlayerFacade = GameObject.FindWithTag("Player").GetComponent<CharacterFacade>();
     }
 
     // Update is called once per frame
@@ -37,9 +37,9 @@ public class GameMenu : MonoBehaviour
     }
     void RefreshMenu()
     {
-        hp.SetValues(charstats.playerBattleChars.currentHP, charstats.playerBattleChars.maxHP);
-        mp.SetValues(charstats.playerBattleChars.currentMP, charstats.playerBattleChars.maxMP);
-        exp.SetValues(charstats.currentEXP, charstats.expToNextLevel[charstats.currentLevel]);
+        hp.SetValues(PlayerFacade.GetStat(CharacterStatsEnum.currentHP), PlayerFacade.GetStat(CharacterStatsEnum.maxHP));
+        mp.SetValues(PlayerFacade.GetStat(CharacterStatsEnum.currentMP), PlayerFacade.GetStat(CharacterStatsEnum.maxMP));
+        exp.SetValues(PlayerFacade.GetStat(CharacterStatsEnum.currentEXP), PlayerFacade.GetStat(CharacterStatsEnum.maxExp));
     }
     public void ToggleWindow(int number)
     {

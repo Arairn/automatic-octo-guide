@@ -5,6 +5,7 @@ public enum StatModType
     PercentAdd,
     PercentMult
 }
+[System.Serializable]
 public class StatModifier
 {
     public readonly float Value;

@@ -7,13 +7,13 @@ using UnityEngine;
 
 public class MarkerJumper : MonoBehaviour
 {
-    public Transform trnsfm;
-    private void Start()
-    {
-        trnsfm = GetComponent<Transform>();
-    }
+
     public void JumpTo(Transform target)
     {
-        trnsfm.position = target.position;
+        transform.position = target.position;
+        if (LogController.BattleMarkerLog)
+        {
+            Debug.Log(transform.position+" Should be== "+ target.position);
+        }
     }
 }

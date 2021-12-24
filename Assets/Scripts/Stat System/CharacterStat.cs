@@ -1,38 +1,56 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEditor;
+using UnityEngine.UIElements;
+using UnityEditor.UIElements;
 
 [Serializable]
 public class CharacterStat
 {
     public float BaseValue;
-    private bool isDirty = true;
+    
     private float _value;
+    private List<StatModifier> statModifiers = new List<StatModifier>();
 
-    public float Value
+
+    void Awake()
     {
+        statModifiers = new List<StatModifier>();
+        statModifiers.Add(new StatModifier(0, StatModType.Flat));
+    }
+    public void Init()
+    {
+        statModifiers = new List<StatModifier>();
+
+    }
+    public int Value
+    {
+        
         get
         {
-            if (isDirty)
-            {
+            Debug.Log("Кто-то спросил про стат!");
+
                 _value = CalculateFinalValue();
-                isDirty = false;
-            }
-            return _value;
+
+            Debug.Log("Получилось " + _value);
+            return (int)Math.Round(_value);
         }
     }
 
-    private readonly List<StatModifier> statModifiers;
 
-    public CharacterStat(float baseValue)
+   
+    public CharacterStat(int baseValue)
     {
         BaseValue = baseValue;
         statModifiers = new List<StatModifier>();
+
     }
+ 
 
     public void AddModifier(StatModifier statModifier)
     {
         statModifiers.Add(statModifier);
-        isDirty = true;
         statModifiers.Sort(CompareModifierOrder);
 
     }
@@ -47,7 +65,7 @@ public class CharacterStat
     public void RemoveModifier(StatModifier statModifier)
     {
         statModifiers.Remove(statModifier);
-        isDirty = true;
+        
     }
     public void RemoveAllModifiersFromSource(object source)
     {
@@ -56,21 +74,25 @@ public class CharacterStat
             if (statModifiers[i].Source == source)
             {
                 statModifiers.RemoveAt(i);
-                isDirty = true;
+                
             }
         } 
     }
 
-    private float CalculateFinalValue()
+    private int CalculateFinalValue()
     {
         float finalValue = BaseValue;
+        Debug.Log("База "+finalValue + " statModifiers" + statModifiers);
         float sumPercentAdd = 0;
+
         for (int i = 0; i < statModifiers.Count; i++)
         {
+            //Debug.Log("82");
             StatModifier mod = statModifiers[i];
             if (mod.Type == StatModType.Flat)
             {
                 finalValue += mod.Value;
+                Debug.Log("сложение "+finalValue);
             }
             else if (mod.Type == StatModType.PercentAdd)
             {
@@ -78,15 +100,18 @@ public class CharacterStat
                 if(i+1>=statModifiers.Count||statModifiers[i+1].Type != StatModType.PercentAdd)
                 {
                     finalValue *= 1 + sumPercentAdd;
+                    Debug.Log("аддитивный процент " + finalValue);
                 }
 
             }
             else if (mod.Type == StatModType.PercentMult)
             {
                 finalValue *= 1+mod.Value;
+                Debug.Log("мульт " + finalValue);
             }
         }
-
-        return (float)Math.Round(finalValue, 3);
+        Debug.Log("итог " + finalValue);
+        return (int)Math.Round(finalValue);
     }
 }
+

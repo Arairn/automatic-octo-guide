@@ -1,37 +1,22 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Charstats : MonoBehaviour
+public class ExperienceSystem : MonoBehaviour
 {
-
-    public string charName;
     public int currentLevel;
     public int currentEXP;
     public int[] expToNextLevel;
     const int maxLevel = 50;
     const int baseEXP = 1000;
-
-    public BattleChars playerBattleChars;
-
-
-    //public int currentHP, maxHP, currentMP, maxMP;
-    //public CharacterStat Defence = new CharacterStat(5);
-    //public int strength, defence, weaponPWR, armorPWR;
-
-    public string equippedWeapon, equippedArmor;
-
     private bool maxLevelIsReached;
-    public Sprite charImage;
-
-
-
+    CharacterFacade Facade;
 
 
     // Start is called before the first frame update
     void Start()
     {
-
-        playerBattleChars = GameManager.instance.playerBattleChars;
-        //Debug.Log(playerBattleChars.maxHP);
+        Facade = GetComponent<CharacterFacade>();
         expToNextLevel = new int[maxLevel];
         expToNextLevel[1] = baseEXP;
         for (int i = 2; i < maxLevel; i++)
@@ -50,7 +35,18 @@ public class Charstats : MonoBehaviour
         }
 #endif
     }
-
+    public int GetExp(bool max)
+    {
+        if (maxLevelIsReached)
+        {
+            return 999999;
+        }
+        if (max)
+        {
+            return expToNextLevel[currentLevel];
+        }
+        return currentEXP;
+    }
     public void AddExp(int expAmount)
     {
 
@@ -77,10 +73,12 @@ public class Charstats : MonoBehaviour
 
         }
     }
-    void LevelUp()
+
+    public void LevelUp()
     {
         //strength++;
         //defence++;
+        Facade.LevelUp();
         GameManager.instance.playerBattleChars.LevelUp(currentLevel);
 
     }

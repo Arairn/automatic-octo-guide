@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1593176626083313258}
   - component: {fileID: 529939663908406180}
-  - component: {fileID: 2865289251034251552}
+  - component: {fileID: -1539791075013501186}
   m_Layer: 0
   m_Name: BattlePlayer
   m_TagString: Untagged
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2865289251034251552
+--- !u!114 &-1539791075013501186
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,6 +92,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1417318644444457684}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4edd441cb87713f4784cd809a11413ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d38a5a72e7389247bccedc3593203a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayer: 0
+  ExperienceSystem: {fileID: 0}
+  CharacterBattleStatsSystem: {fileID: 0}
+  CharacterInfo: {fileID: 0}
+  animationController: {fileID: 0}
+  mayNotHaveBattleSystem: 0
+  ShouldBeLinkedWithPlayer: 1

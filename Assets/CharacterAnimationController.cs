@@ -1,22 +1,9 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleChars : MonoBehaviour
+public class CharacterAnimationController : MonoBehaviour
 {
-
-    public bool isPlayer;
-
-    public new string name;
-
-
-
-    public int maxHP, currentMP, maxMP, strength, defence, weaponPWR, armorPWR;
-    public bool hasDied;
-    public int currentHP;
-
-
-    public BattleMoves[] battleMoves;
-    public BattleMoves[] spawnMoves;
-    public BattleMoves[] curseMoves;
 
     SpriteRenderer spriteRenderer;
     public Sprite AliveSprite, DeadSprite;
@@ -24,20 +11,16 @@ public class BattleChars : MonoBehaviour
 
     float fadeSpeed = 0.5f;
     bool isFading = false;
-    
-    public enum CharStatus
+
+    enum CharStatus
     {
         isDead,
         isAlive
     }
-    //CharStatus charStatus;
-
-
     // Start is called before the first frame update
     void Start()
     {
-        GameManager.instance.LinkToBattleChars();
-        //charStatus = CharStatus.isAlive;
+        
     }
 
     // Update is called once per frame
@@ -54,28 +37,12 @@ public class BattleChars : MonoBehaviour
             }
         }
     }
-
-    public void DealDamage(int amount)
-    {
-        currentHP -= amount;
-        if (currentHP < 0) currentHP = 0;
-    }
-
-
-    public void LevelUp(int level)
-    {
-        maxHP += 5;
-        currentHP = maxHP;
-        maxMP += 2;
-        currentMP = maxMP;
-    }
-
     public void SetSpriteToDead(bool isDead)
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         if (!spriteRenderer)
-            
+
         {
             Debug.Log("SpriteRenderer is not found");
             return;
@@ -93,17 +60,20 @@ public class BattleChars : MonoBehaviour
 
                 //spriteRenderer.enabled = false;
                 isFading = true;
-                Debug.Log(name + "seems not to have dead sprite, disabling");
+                if (LogController.BattleAnimationsLog)
+                {
+                    Debug.Log(name + "seems not to have dead sprite, disabling");
+                }
             }
         }
         else
         {
-            
+
             spriteRenderer.enabled = true;
 
             if (AliveSprite)
             {
-                
+
                 spriteRenderer.sprite = AliveSprite;
             }
 
@@ -111,11 +81,4 @@ public class BattleChars : MonoBehaviour
         }
 
     }
-
-    public void DestroyIt()
-    {
-        Destroy(this);
-    }
-
-
 }
