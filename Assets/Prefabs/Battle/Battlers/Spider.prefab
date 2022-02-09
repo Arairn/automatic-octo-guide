@@ -117,7 +117,7 @@ MonoBehaviour:
   CharacterInfo: {fileID: 6680514667983257316}
   animationController: {fileID: 6388493442010012714}
   AI: {fileID: 3357446500776081855}
-  buffSystem: {fileID: 0}
+  battleBuffSystem: {fileID: 0}
   mayNotHaveBattleSystem: 0
   ShouldBeLinkedWithPlayer: 0
 --- !u!114 &6680514667983257316
@@ -160,27 +160,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2180da76275a9d4dbbba22287171337, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 30
-  currentMP: 0
-  maxMP: 0
-  weaponPWR: 0
-  armorPWR: 0
+  HP:
+    current: 15
+    max: 30
+  MP:
+    current: 0
+    max: 0
   hasDied: 0
-  currentHP: 15
-  physicalPower:
-    BaseValue: 15
-  physicalDefence:
-    BaseValue: 5
-  magicPower:
-    BaseValue: 5
-  magicalDefence:
-    BaseValue: 2
-  physicalPenetration:
-    BaseValue: 0
-  magicalPenetration:
-    BaseValue: 0
+  power:
+    physical:
+      BaseValue: 2
+    magical:
+      BaseValue: 3
+  defence:
+    physical:
+      BaseValue: 3
+    magical:
+      BaseValue: 6
+  penetration:
+    physical:
+      BaseValue: 1
+    magical:
+      BaseValue: 3
   damageMoves:
-  - {fileID: 11400000, guid: 62f02b3278e6dc24d813da890e78cd9f, type: 2}
-  - {fileID: 11400000, guid: 523cac00df24dd2408979830a53164ec, type: 2}
+  - {fileID: 1042298071727822062, guid: 2ee8d0cca5e8b0c43b707dbce1c7d261, type: 3}
+  - {fileID: 1110139895477761566, guid: 5c2c26adfe41a8b4f9df06e138429401, type: 3}
   spawnMoves: []
   curseMoves: []

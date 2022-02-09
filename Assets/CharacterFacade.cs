@@ -9,13 +9,15 @@ public class CharacterFacade : MonoBehaviour
     public CharacterInfo CharacterInfo;
     public CharacterAnimationController animationController;
     public BattleAI AI;
-    public BattleBuffSystem buffSystem;
+    public BuffSystem battleBuffSystem;
 
     [SerializeField]
     bool mayNotHaveBattleSystem = false;
     [SerializeField]
     bool ShouldBeLinkedWithPlayer = false;
     // Start is called before the first frame update
+
+    //Инициализация всего
     void Awake()
     {
         CharacterBattleStatsSystem = GetComponent<CharacterBattleStatsSystem>();
@@ -23,12 +25,12 @@ public class CharacterFacade : MonoBehaviour
         CharacterInfo = GetComponent<CharacterInfo>();
         animationController = GetComponent<CharacterAnimationController>();
         AI = GetComponent<BattleAI>();
-        buffSystem = GetComponent<BattleBuffSystem>();
+        battleBuffSystem = GetComponent<BuffSystem>();
 
 
         if (ShouldBeLinkedWithPlayer)
         {
-            if (LogController.PlayerStatsMagicLog)
+            if (LogController.instance.PlayerStatsMagicLog)
             {
                 Debug.Log("пытаемся прицепить " + GameManager.instance.playerFacade.GetComponent<CharacterBattleStatsSystem>() + " к Баттл-префабу игрока");
             }
@@ -39,9 +41,9 @@ public class CharacterFacade : MonoBehaviour
         }
         isPlayer = CharacterInfo.isPlayer;
 
-        if (!buffSystem)
+        if (!battleBuffSystem)
         {
-            buffSystem = gameObject.AddComponent(typeof(BattleBuffSystem)) as BattleBuffSystem;
+            battleBuffSystem = gameObject.AddComponent(typeof(BuffSystem)) as BuffSystem;
 
         }
 
@@ -64,17 +66,12 @@ public class CharacterFacade : MonoBehaviour
 
     }
 
-    public void CheckBuffs(bool nowItIsBeginning)
+    public void CheckBuffs()
     {
-        buffSystem.CheckAllBuffs(nowItIsBeginning);
+        battleBuffSystem.CheckAllBuffs();
     }
 
-    void Start()
-    {
 
-
-
-    }
 
     //Связки с Экспой
 
@@ -100,29 +97,32 @@ public class CharacterFacade : MonoBehaviour
     }
 
     //Статы
-    public int GetStat(CharacterStatsEnum stat)
+    public int GetStat(CharacterStatsEnum stat, TypeOfDamage typeOfDamage= TypeOfDamage.physical)
     {
         if (CharacterBattleStatsSystem)
         {
             switch (stat)
             {
+                /*
                 case CharacterStatsEnum.physicalPower:
-                    //
+                    
                     return CharacterBattleStatsSystem.physicalPower.Value;
                 case CharacterStatsEnum.physicalDefence:
                     return (int)CharacterBattleStatsSystem.physicalDefence.Value;
-                case CharacterStatsEnum.currentHP:
-                    return CharacterBattleStatsSystem.currentHP;
+                */
+                case CharacterStatsEnum.currentHP:                
+                    return CharacterBattleStatsSystem.HP.Get(false);
                 case CharacterStatsEnum.maxHP:
-                    return CharacterBattleStatsSystem.maxHP;
+                    return CharacterBattleStatsSystem.HP.Get(true);
                 case CharacterStatsEnum.currentMP:
-                    return CharacterBattleStatsSystem.currentMP;
+                    return CharacterBattleStatsSystem.MP.Get(false);
                 case CharacterStatsEnum.maxMP:
-                    return CharacterBattleStatsSystem.maxMP;
+                    return CharacterBattleStatsSystem.MP.Get(true);
                 case CharacterStatsEnum.currentEXP:
                     return ExperienceSystem.GetExp(false);
                 case CharacterStatsEnum.maxExp:
                     return ExperienceSystem.GetExp(true);
+                    /*
                 case CharacterStatsEnum.magicPower:
                     return CharacterBattleStatsSystem.magicPower.Value;
                 case CharacterStatsEnum.magicalDefence:
@@ -131,6 +131,13 @@ public class CharacterFacade : MonoBehaviour
                     return CharacterBattleStatsSystem.physicalPenetration.Value;
                 case CharacterStatsEnum.magicalPenetration:
                     return CharacterBattleStatsSystem.magicalPenetration.Value;
+                    */
+                case CharacterStatsEnum.power:
+                    return CharacterBattleStatsSystem.power.GetStat(typeOfDamage);
+                case CharacterStatsEnum.defence:
+                    return CharacterBattleStatsSystem.defence.GetStat(typeOfDamage);
+                case CharacterStatsEnum.penetration:
+                    return CharacterBattleStatsSystem.penetration.GetStat(typeOfDamage);
                 default:
                     Debug.Log("Что-то не так, " + CharacterBattleStatsSystem + " не предусмотрен в switch ");
                     break;
@@ -143,6 +150,27 @@ public class CharacterFacade : MonoBehaviour
         return 0;
     }
 
+    public CharacterStat Stat(ModStat statNeeded)
+    {
+        switch (statNeeded)
+        {
+            case ModStat.PhysPower:
+                return CharacterBattleStatsSystem.power.physical;
+            case ModStat.MagPower:
+                return CharacterBattleStatsSystem.power.magical;
+            case ModStat.PhysDef:
+                return CharacterBattleStatsSystem.defence.physical;
+            case ModStat.MagDef:
+                return CharacterBattleStatsSystem.defence.magical;
+            case ModStat.PhysPen:
+                return CharacterBattleStatsSystem.penetration.physical;
+            case ModStat.MagPen:
+                return CharacterBattleStatsSystem.penetration.magical;
+        }
+        Debug.LogError("Запросили стат который не прописан");
+        return null;
+
+    }
 
 
     public void StartEnemyTurn() 
@@ -150,23 +178,43 @@ public class CharacterFacade : MonoBehaviour
         AI.AITurn();
     }
 
-    public void DealDamage(int amount)//,TypeOfDamage typeOfDamage, float vampPercent)
+    public void ChangeHP(int amount)//,TypeOfDamage typeOfDamage, float vampPercent)
     {
-        //Debug.LogWarning("Тип повреждений и вампиризм не обрабатывается");
+        Debug.LogWarning("Changing " + amount + ". Тип повреждений и вампиризм не обрабатывается");
         if (CharacterBattleStatsSystem)
         {
-            Debug.Log("Dealing " + amount + " damage to " + CharacterInfo.charName);
-            CharacterBattleStatsSystem.DealDamage(amount);
-            Instantiate(BattleManager.instance.damageText, this.transform.position, this.transform.rotation).SetDamage(amount);
+            Debug.Log(CharacterInfo.charName + ": HP +"+amount);
+            CharacterBattleStatsSystem.HP.Change(amount);
+            if(amount <0)Instantiate(BattleManager.instance.damageText, this.transform.position, this.transform.rotation).SetDamage(amount);
+            else if( amount >0) Instantiate(BattleManager.instance.healText, this.transform.position, this.transform.rotation).SetDamage(amount);
+            ChangesNeededToPassToBattle();
         }
-    }
+    }/*
     public void Heal(int amount)
     {
         if (CharacterBattleStatsSystem)
         {
-            CharacterBattleStatsSystem.Heal(amount);
+            if (amount > 0)
+            {
+                CharacterBattleStatsSystem.Heal(amount);
+                Instantiate(BattleManager.instance.healText, this.transform.position, this.transform.rotation).SetDamage(amount);
+                ChangesNeededToPassToBattle();
+            }
+        }
+    }*/
+    public void ChangeMP(int amount)
+    {
+        if (CharacterBattleStatsSystem)
+        {
+            Debug.Log("Dealing " + -amount + " mana damage to " + CharacterInfo.charName);
+            CharacterBattleStatsSystem.MP.Change(-amount);
+            //if (amount < 0) Instantiate(BattleManager.instance.damageText, this.transform.position, this.transform.rotation).SetDamage(amount);
+            //else if (amount < 0) Instantiate(BattleManager.instance.healText, this.transform.position, this.transform.rotation).SetDamage(amount);
+            ChangesNeededToPassToBattle();
         }
     }
+
+
 
 
     public void DestroyIt()
@@ -179,6 +227,7 @@ public class CharacterFacade : MonoBehaviour
     public void SetToDead()
     {
         animationController.SetSpriteToDead(true);
+        battleBuffSystem.ClearBuffs();
     }
     public void SetToRevived()
     {
@@ -186,12 +235,15 @@ public class CharacterFacade : MonoBehaviour
     }
 
     //Баффы
-    public void AddBuff(BattleBuff buff)
+    public void AddBuff(NewBuffBit buff, CharacterFacade attacker)
     {
+        battleBuffSystem.AddBuff(buff, attacker);
 
     }
-    public void RemoveBuff(BattleBuff buff)
-    {
 
+
+    void ChangesNeededToPassToBattle()
+    {
+        BattleManager.instance.battleTurnManager.InvokeBattleChanges();
     }
 }

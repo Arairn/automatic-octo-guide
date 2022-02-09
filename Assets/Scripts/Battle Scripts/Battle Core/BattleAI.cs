@@ -19,12 +19,12 @@ public class BattleAI : MonoBehaviour
         return BattleManager.instance.activeBattlers[target];
     }
 
-    BattleMoves SelectAttack()
+    Spell SelectAttack()
     {
-        BattleMoves[] damagemovesAvaliable = BattleManager.instance.activeBattlers[BattleTurnManager.currentTurn].CharacterBattleStatsSystem.damageMoves;
+        Spell[] damagemovesAvaliable = BattleManager.instance.activeBattlers[BattleTurnManager.currentTurn].CharacterBattleStatsSystem.damageMoves;
         int attack = Random.Range(0, damagemovesAvaliable.Length);
         //battlemovesAvaliable[attack].DisplayMove(BattleManager.instance.playerPositions[target]);
-        if (LogController.BattleDamageLog)
+        if (LogController.instance.BattleDamageLog)
         {
             Debug.Log(BattleManager.instance.activeBattlers[BattleTurnManager.currentTurn] + " had selected " + damagemovesAvaliable[attack].name + " and going to run it");
         }

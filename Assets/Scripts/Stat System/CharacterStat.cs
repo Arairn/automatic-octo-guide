@@ -8,7 +8,7 @@ using UnityEditor.UIElements;
 [Serializable]
 public class CharacterStat
 {
-    public float BaseValue;
+    public int BaseValue;
     
     private float _value;
     private List<StatModifier> statModifiers = new List<StatModifier>();
@@ -29,11 +29,11 @@ public class CharacterStat
         
         get
         {
-            Debug.Log("Кто-то спросил про стат!");
+            if (LogController.instance.StatLog) Debug.Log("Кто-то спросил про стат!");
 
                 _value = CalculateFinalValue();
 
-            Debug.Log("Получилось " + _value);
+            if (LogController.instance.StatLog) Debug.Log("Получилось " + _value);
             return (int)Math.Round(_value);
         }
     }
@@ -82,7 +82,7 @@ public class CharacterStat
     private int CalculateFinalValue()
     {
         float finalValue = BaseValue;
-        Debug.Log("База "+finalValue + " statModifiers" + statModifiers);
+        if (LogController.instance.StatLog) Debug.Log("База "+finalValue + " statModifiers" + statModifiers);
         float sumPercentAdd = 0;
 
         for (int i = 0; i < statModifiers.Count; i++)
@@ -92,7 +92,7 @@ public class CharacterStat
             if (mod.Type == StatModType.Flat)
             {
                 finalValue += mod.Value;
-                Debug.Log("сложение "+finalValue);
+                if (LogController.instance.StatLog) Debug.Log("сложение "+finalValue);
             }
             else if (mod.Type == StatModType.PercentAdd)
             {
@@ -100,18 +100,18 @@ public class CharacterStat
                 if(i+1>=statModifiers.Count||statModifiers[i+1].Type != StatModType.PercentAdd)
                 {
                     finalValue *= 1 + sumPercentAdd;
-                    Debug.Log("аддитивный процент " + finalValue);
+                    if (LogController.instance.StatLog) Debug.Log("аддитивный процент " + finalValue);
                 }
 
             }
             else if (mod.Type == StatModType.PercentMult)
             {
                 finalValue *= 1+mod.Value;
-                Debug.Log("мульт " + finalValue);
+                if (LogController.instance.StatLog) Debug.Log("мульт " + finalValue);
             }
         }
-        Debug.Log("итог " + finalValue);
+        
+        if(LogController.instance.StatLog) Debug.Log("итог " + finalValue);
         return (int)Math.Round(finalValue);
     }
 }
-

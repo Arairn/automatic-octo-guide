@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2703328652034957170}
   - component: {fileID: 7773582117636717828}
   m_Layer: 0
-  m_Name: Eyeball
+  m_Name: Dummi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -117,7 +117,7 @@ MonoBehaviour:
   CharacterInfo: {fileID: 4730100676419524432}
   animationController: {fileID: 2703328652034957170}
   AI: {fileID: 8607325235184595903}
-  buffSystem: {fileID: 0}
+  battleBuffSystem: {fileID: 0}
   mayNotHaveBattleSystem: 0
   ShouldBeLinkedWithPlayer: 0
 --- !u!114 &4730100676419524432
@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf10b1f972f9bec46bb896021cfd3051, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  charName: EyeBALL
+  charName: Dummi
   isPlayer: 0
 --- !u!114 &2703328652034957170
 MonoBehaviour:
@@ -160,26 +160,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2180da76275a9d4dbbba22287171337, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 30
-  currentMP: 0
-  maxMP: 0
-  weaponPWR: 0
-  armorPWR: 0
+  HP:
+    current: 30
+    max: 30
+  MP:
+    current: 0
+    max: 0
   hasDied: 0
-  currentHP: 30
-  physicalPower:
-    BaseValue: 5
-  physicalDefence:
-    BaseValue: 5
-  magicPower:
-    BaseValue: 5
-  magicalDefence:
-    BaseValue: 5
-  physicalPenetration:
-    BaseValue: 0
-  magicalPenetration:
-    BaseValue: 0
+  power:
+    physical:
+      BaseValue: 2
+    magical:
+      BaseValue: 2
+  defence:
+    physical:
+      BaseValue: 3
+    magical:
+      BaseValue: 2
+  penetration:
+    physical:
+      BaseValue: 1
+    magical:
+      BaseValue: 1
   damageMoves:
-  - {fileID: 11400000, guid: 523cac00df24dd2408979830a53164ec, type: 2}
+  - {fileID: 1042298071727822062, guid: 33a10b647c53f044783055b9105ae635, type: 3}
   spawnMoves: []
   curseMoves: []

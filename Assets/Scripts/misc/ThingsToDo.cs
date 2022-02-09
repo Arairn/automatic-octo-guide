@@ -8,7 +8,7 @@ public class ThingsToDo : MonoBehaviour
     void Start()
     {
 
-        if (LogController.Ideas)
+        if (LogController.instance.Ideas)
         {
             Debug.Log("Идеи для реализации:\n Скрипт Things TO DO!");
             /*

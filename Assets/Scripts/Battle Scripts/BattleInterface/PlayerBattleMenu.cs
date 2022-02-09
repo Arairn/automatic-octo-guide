@@ -8,7 +8,7 @@ public class PlayerBattleMenu : MonoBehaviour
     [SerializeField]
     BattleTurnManager battleTurnManager;
 
-    BattleMoves[] damageMoves, spawnMoves, curseMoves;
+    Spell[] damageMoves, spawnMoves, curseMoves;
 
     CharacterFacade currentCharFacade;
     enum currentActionState
@@ -19,10 +19,10 @@ public class PlayerBattleMenu : MonoBehaviour
         isWaitingForTarget
     }
     currentActionState actionState;
-    BattleMoves[] movesToSelectFrom;
+    Spell[] movesToSelectFrom;
 
 
-    BattleMoves selectedBattleMove;
+    Spell selectedBattleMove;
     CharacterFacade target;
     private void Start()
     {
@@ -63,7 +63,7 @@ public class PlayerBattleMenu : MonoBehaviour
         battleButtonsManager.Clean();
         GetMoves();
         //currentCharFacade = BattleManager.instance.activeBattlers[BattleTurnManager.currentTurn];
-        if (LogController.BattleInterfaceLog)
+        if (LogController.instance.BattleInterfaceLog)
         {
             Debug.Log("" + BattleManager.instance.activeBattlers[BattleTurnManager.currentTurn] + "" + damageMoves[0].name + " из "); //+ movesToSelectFrom[j].name);
 
@@ -81,12 +81,12 @@ public class PlayerBattleMenu : MonoBehaviour
                 if (i == 1)
                 {
 
-                    movesToSelectFrom = new BattleMoves[damageMoves.Length];
+                    movesToSelectFrom = new Spell[damageMoves.Length];
 
                     for (int j = 0; j < damageMoves.Length; j++)
                     {
                         movesToSelectFrom[j] = (damageMoves[j]);
-                        if (LogController.BattleInterfaceLog)
+                        if (LogController.instance.BattleInterfaceLog)
                         {
                             Debug.Log("checked battleMoves, got " + movesToSelectFrom[j].name);
                             Debug.Log("currentBattleChars.battleMoves.Length = " + damageMoves.Length);
@@ -97,7 +97,7 @@ public class PlayerBattleMenu : MonoBehaviour
                 }
                 if (i == 2)
                 {
-                    movesToSelectFrom = new BattleMoves[spawnMoves.Length];
+                    movesToSelectFrom = new Spell[spawnMoves.Length];
 
                     for (int j = 0; j < spawnMoves.Length; j++)
                     {
@@ -108,7 +108,7 @@ public class PlayerBattleMenu : MonoBehaviour
                 }
                 if (i == 3)
                 {
-                    movesToSelectFrom = new BattleMoves[curseMoves.Length];
+                    movesToSelectFrom = new Spell[curseMoves.Length];
                     for (int j = 0; j < curseMoves.Length; j++)
                     {
                         movesToSelectFrom[j] = (curseMoves[j]);
@@ -157,7 +157,7 @@ public class PlayerBattleMenu : MonoBehaviour
                 selectedBattleMove.ApplyMove(currentCharFacade, target);
                 //BattleCalculator.instance.ApplyDamage(currentCharFacade, target, selectedBattleMove.movePower, selectedBattleMove.);
 
-                battleTurnManager.NextTurn();
+                battleTurnManager.NextTurnFromPlayer();
 
 
 
@@ -175,7 +175,7 @@ public class PlayerBattleMenu : MonoBehaviour
         currentCharFacade = BattleManager.instance.activeBattlers[BattleTurnManager.currentTurn];
         
 
-        damageMoves = new BattleMoves[currentCharFacade.CharacterBattleStatsSystem.damageMoves.Length];
+        damageMoves = new Spell[currentCharFacade.CharacterBattleStatsSystem.damageMoves.Length];
 
         for (int j = 0; j < currentCharFacade.CharacterBattleStatsSystem.damageMoves.Length; j++)
         {
@@ -183,14 +183,14 @@ public class PlayerBattleMenu : MonoBehaviour
         }
 
 
-        spawnMoves = new BattleMoves[currentCharFacade.CharacterBattleStatsSystem.spawnMoves.Length];
+        spawnMoves = new Spell[currentCharFacade.CharacterBattleStatsSystem.spawnMoves.Length];
 
         for (int j = 0; j < currentCharFacade.CharacterBattleStatsSystem.spawnMoves.Length; j++)
         {
             spawnMoves[j] = (currentCharFacade.CharacterBattleStatsSystem.spawnMoves[j]);
         }
 
-        curseMoves = new BattleMoves[currentCharFacade.CharacterBattleStatsSystem.curseMoves.Length];
+        curseMoves = new Spell[currentCharFacade.CharacterBattleStatsSystem.curseMoves.Length];
 
         for (int j = 0; j < currentCharFacade.CharacterBattleStatsSystem.curseMoves.Length; j++)
         {

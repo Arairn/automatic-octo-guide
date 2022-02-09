@@ -60,7 +60,7 @@ public class CharacterAnimationController : MonoBehaviour
 
                 //spriteRenderer.enabled = false;
                 isFading = true;
-                if (LogController.BattleAnimationsLog)
+                if (LogController.instance.BattleAnimationsLog)
                 {
                     Debug.Log(name + "seems not to have dead sprite, disabling");
                 }

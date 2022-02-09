@@ -19,7 +19,9 @@ public class BattleManager : MonoBehaviour
     public Transform[] enemyPositions;
     
     public DamageText damageText;
-    
+    public DamageText healText;
+
+
 
     [Header("Battle Math")]
 
@@ -39,6 +41,8 @@ public class BattleManager : MonoBehaviour
     public GameObject playerInfoParent, enemyInfoParent;
     public GameObject battlerInfo;
     public PlayerBattleMenu playerBattleMenu;
+
+    List<int> placesPool;
 
     
 
@@ -61,19 +65,44 @@ public class BattleManager : MonoBehaviour
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.T))
         {
-            BattleStart(new string[] { "Eyeball", "Spider" });
+            BattleStart(new string[] { "Eyeball", "Spider","Dummi" });
 
         }
 #endif
 
     }
 
+
+    public List<int> PlacesPool(Transform[] positions)
+    {
+        placesPool = new List<int>();
+        for (int i = 0; i < positions.Length; i++)
+        {
+            if (positions[i].childCount == 0)
+            {
+                placesPool.Add(i);
+
+            }
+        }
+
+        if(placesPool.Count == 0)
+        {
+            Debug.LogWarning("Невозможно найти пустое место!");
+            placesPool.Add(UnityEngine.Random.Range(0, positions.Length));
+        }
+
+        return placesPool;
+
+    }
     public void BattleStart(string[] enemiesToSpawn)
     {
+
         int[] randomPlaces = new int[enemiesToSpawn.Length];
         for (int i = 0; i < enemiesToSpawn.Length; i++)
         {
-            randomPlaces[i] = UnityEngine.Random.Range(0, enemyPositions.Length);
+
+            List<int> placesPool = PlacesPool(enemyPositions);
+            randomPlaces[i] = placesPool[UnityEngine.Random.Range(0, placesPool.Count)];
         }
         BattleStart(enemiesToSpawn, randomPlaces);
     }
@@ -109,7 +138,8 @@ public class BattleManager : MonoBehaviour
             for (int i = 0; i < enemiesToSpawn.Length; i++)
             {
 
-
+                SpawnBattler(enemiesToSpawn[i], enemyPositions[enemyPlacesToSpawn[i]]);
+                /*
                 for (int j = 0; j < enemyPrefabs.Length; j++)
                 {
                     if (enemyPrefabs[j].name == enemiesToSpawn[i])
@@ -129,6 +159,7 @@ public class BattleManager : MonoBehaviour
                     }
 
                 }
+                */
 
             }
 
@@ -138,6 +169,34 @@ public class BattleManager : MonoBehaviour
             UpdateBattle();
             battleTurnManager.StartTurn(true);
         }
+    }
+
+    public void SpawnBattler(string name, Transform place)
+    {
+        for (int j = 0; j < enemyPrefabs.Length; j++)
+        {
+            if (enemyPrefabs[j].name == name)
+            {
+                SpawnBattler(enemyPrefabs[j], place);
+
+
+            }
+
+        }
+    }
+    public void SpawnBattler(CharacterFacade character, Transform place)
+    {
+        if (LogController.instance.BattleSpawnLog)
+        {
+            Debug.Log("Добавляем " + character.name);
+        }
+        CharacterFacade newEnemy = Instantiate(character, place.position, place.rotation);
+
+        newEnemy.transform.parent = place;
+
+        activeBattlers.Add(newEnemy);
+        Instantiate(battlerInfo).GetComponent<BattlerInfoUpdater>().SetParams(activeBattlers.Count - 1, enemyInfoParent);
+        //activeBattlersEnemy.Add(i);
     }
 
 
@@ -195,7 +254,6 @@ public class BattleManager : MonoBehaviour
         if (battleIsActive) {
             Debug.Log("Битва закончена");
             BattleHasEnded?.Invoke();
-            GameManager.instance.ReturnFromBattle();
             StartCoroutine(GameObject.FindWithTag("LevelLoader").GetComponent<LevelLoader>().BlackAndGone());
             StartCoroutine(EndBattle(GameObject.FindWithTag("LevelLoader").GetComponent<LevelLoader>().transitionTime));
             }

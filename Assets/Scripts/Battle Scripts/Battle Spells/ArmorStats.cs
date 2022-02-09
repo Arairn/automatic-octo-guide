@@ -18,7 +18,7 @@ public class ArmorStats : ScriptableObject
     {
         //List<float> armorStats = new List<float>();
         if(armorStats.Count<1) armorStats.Add(baseArmorIncrease);
-        Debug.Log(armorStats[0]);
+        //Debug.Log(armorStats[0]);
         Recount(50);
 
         /*for (int i = 1; i<50;i++)

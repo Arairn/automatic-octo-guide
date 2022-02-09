@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public enum CharacterStatsEnum
@@ -8,13 +9,73 @@ public enum CharacterStatsEnum
     maxMP,
     currentEXP,
     maxExp,
+    /*
     physicalPower,
     magicPower,
     physicalDefence,
     magicalDefence,
     physicalPenetration,
-    magicalPenetration
+    magicalPenetration,
+    */
+    power,
+    defence,
+    penetration
+        
 }
+
+public enum ModStat
+{
+    PhysPower,
+    MagPower,
+    PhysDef,
+    MagDef,
+    PhysPen,
+    MagPen
+}
+
+[Serializable]
+public class Points
+{
+    [SerializeField]
+    int current;
+    [SerializeField]
+    int max;
+    /*
+    public void Change(int amount)
+    {
+        Change(amount, false);
+    }
+    */
+    public void Change(int amount,bool overCap = false)
+    {
+        current += amount;
+        if (current > max&&!overCap) current = max;
+    }
+    public void ChangeMax(int amount, bool refill)
+    {
+        max = +amount;
+        if (refill)
+        {
+            current = max;
+        }
+    }
+    public int Get(bool ifmax)
+    {
+        if (ifmax) return max;
+        else return current;
+    }
+
+    public Points(int _current, int _max)
+    {
+        current = _current;
+        max = _max;
+    }
+    public Points(int _max)
+    {
+        current = max = _max;
+    }
+}
+
 public class CharacterBattleStatsSystem : MonoBehaviour
 {
 
@@ -23,70 +84,63 @@ public class CharacterBattleStatsSystem : MonoBehaviour
     //public new string name;
 
 
-    [Header("HP")]
-    public int maxHP;
-    public int currentHP;
+    
+    public Points HP;
+    public Points MP;
 
-    [Header("MP")]
-    public int currentMP;
-    public int maxMP;
-
+    [HideInInspector]
     public bool hasDied;
 
     [Header("Stats")]
 
-    public CharacterStat physicalPower;
-    public CharacterStat physicalDefence;
-    public CharacterStat physicalPenetration;
-
-    public CharacterStat magicPower;
-    public CharacterStat magicalDefence;
-    public CharacterStat magicalPenetration;
-
-    [Header("Abilities")]
-
-    public BattleMoves[] damageMoves;
-    public BattleMoves[] spawnMoves;
-    public BattleMoves[] curseMoves;
+    public MultiCharacterStat power;
+    public MultiCharacterStat defence;
+    public MultiCharacterStat penetration;
 
 
-    
+    //public CharacterStat physicalPower;
+    //public CharacterStat physicalDefence;
+    //public CharacterStat physicalPenetration;
+
+    [Space(10)]
+
+    //public CharacterStat magicPower;
+    //public CharacterStat magicalDefence;
+    //public CharacterStat magicalPenetration;
+
+    [Header("Spells")]
+
+    public Spell[] damageMoves;
+    public Spell[] spawnMoves;
+    public Spell[] curseMoves;
 
 
-  
+
+
+
+
     void Start()
     {
-
+        power.Init();
+        defence.Init();
+        penetration.Init();
+        /*
         physicalPower.Init();
         physicalDefence.Init();
         magicPower.Init();
         magicalDefence.Init();
         physicalPenetration.Init();
         magicalPenetration.Init();
+        */
     }
 
    
 
 
-    public void DealDamage(int amount)
-    {
-        currentHP -= amount;
-        if (currentHP < 0) currentHP = 0;
-    }
-    public void Heal(int amount)
-    {
-        currentHP += amount;
-        if (currentHP > maxHP) currentHP = maxHP;
-    }
-
-
-
     public void LevelUp(int level)
     {
-        maxHP += 5;
-        currentHP = maxHP;
-        maxMP += 2;
-        currentMP = maxMP;
+        HP.ChangeMax(10, true);
+        MP.ChangeMax(5, true);
     }
 
     

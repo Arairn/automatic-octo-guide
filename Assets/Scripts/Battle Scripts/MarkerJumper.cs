@@ -11,7 +11,7 @@ public class MarkerJumper : MonoBehaviour
     public void JumpTo(Transform target)
     {
         transform.position = target.position;
-        if (LogController.BattleMarkerLog)
+        if (LogController.instance.BattleMarkerLog)
         {
             Debug.Log(transform.position+" Should be== "+ target.position);
         }

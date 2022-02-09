@@ -12,7 +12,10 @@ public class BattleTurnManager : MonoBehaviour
     float timeForEnemyToMove = 1f;
     public static event Action BattlersHaveChanged;
 
-
+    public void InvokeBattleChanges()
+    {
+        BattlersHaveChanged?.Invoke();
+    }
 
     private void EnemyAttack()
     {
@@ -22,9 +25,9 @@ public class BattleTurnManager : MonoBehaviour
     }
     public void NextTurn()
     {
-        if(LogController.BattleTurns) Debug.Log("Заканчиваем ход " + currentTurn);
+        if(LogController.instance.BattleTurns) Debug.Log("Заканчиваем ход " + currentTurn);
 
-        BattleManager.instance.activeBattlers[currentTurn].CheckBuffs(false);
+        BattleManager.instance.activeBattlers[currentTurn].CheckBuffs();
         BattlersHaveChanged?.Invoke();
 
         if (currentTurn >= BattleManager.instance.activeBattlers.Count - 1)
@@ -40,11 +43,11 @@ public class BattleTurnManager : MonoBehaviour
     }
     public void StartTurn()
     {
-        if (LogController.BattleTurns) Debug.Log("Начинаем ход " + currentTurn);
+        if (LogController.instance.BattleTurns) Debug.Log("Начинаем ход " + currentTurn);
         highLight.JumpTo(BattleManager.instance.activeBattlers[currentTurn].GetComponent<Transform>());
-        if (LogController.BattleMarkerLog)
+        if (LogController.instance.BattleMarkerLog)
         {
-            Debug.Log("Попытадись перенести синий маркер на " + BattleManager.instance.activeBattlers[currentTurn].name);
+            Debug.Log("Попытались перенести синий маркер на " + BattleManager.instance.activeBattlers[currentTurn].name);
         }
         
         BattleManager.instance.UpdateBattle();
@@ -56,7 +59,7 @@ public class BattleTurnManager : MonoBehaviour
         }
 
         //Проверяем баффы начала хода
-        BattleManager.instance.activeBattlers[currentTurn].CheckBuffs(true);
+        //BattleManager.instance.activeBattlers[currentTurn].CheckBuffs(true);
 
 
         if (BattleManager.instance.activeBattlers[currentTurn].isPlayer)
@@ -67,7 +70,7 @@ public class BattleTurnManager : MonoBehaviour
         {
             StartCoroutine(EnemyMove()); 
         }
-        BattlersHaveChanged?.Invoke();
+        //BattlersHaveChanged?.Invoke();
     } 
     public void StartTurn(bool newBattle)
     {
@@ -76,17 +79,27 @@ public class BattleTurnManager : MonoBehaviour
             currentTurn = 0;
         }
         StartTurn();
+        BattlersHaveChanged?.Invoke();
 
     }
 
     public IEnumerator EnemyMove()
     {
-        if (LogController.BattleTurns) Debug.Log("Начинаем корутину следующего хода");
+        if (LogController.instance.BattleTurns) Debug.Log("Начинаем корутину следующего хода");
             yield return new WaitForSeconds(timeForEnemyToMove);
         EnemyAttack();
         BattlersHaveChanged?.Invoke();
         yield return new WaitForSeconds(timeForEnemyToMove);
 
+        NextTurn();
+    }
+    public void NextTurnFromPlayer()
+    {
+        StartCoroutine(WaitForEndOfFrameForTheNextTurn());
+    }
+    public IEnumerator WaitForEndOfFrameForTheNextTurn()
+    {
+        yield return new WaitForSeconds(timeForEnemyToMove);
         NextTurn();
     }
 

@@ -8,10 +8,11 @@ public enum StatModType
 [System.Serializable]
 public class StatModifier
 {
-    public readonly float Value;
-    public readonly StatModType Type;
-    public readonly int Order;
-    public readonly object Source;
+    //public ModStat stat;
+    public float Value;
+    public StatModType Type;
+    public int Order;
+    public object Source;
 
     public StatModifier(float value, StatModType type, int order, object source)
     {
@@ -27,3 +28,5 @@ public class StatModifier
     public StatModifier(float value, StatModType type, int order) : this(value, type, order, null) { }
     public StatModifier(float value, StatModType type, object source) : this(value, type, (int)type, source) { }
 }
+
+

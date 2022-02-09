@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &9129035563295054098
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2699585993926472599}
+  - component: {fileID: 7536795928729506687}
+  - component: {fileID: 4590402075878799863}
+  - component: {fileID: -7495094836287112415}
+  m_Layer: 0
+  m_Name: DefDebuff
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2699585993926472599
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9129035563295054098}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.8104861, y: -8.202942, z: -0.21633905}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7536795928729506687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9129035563295054098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c9344dfa96f3144ae514331b29f6a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Defence Debuff
+  manaCost: 5
+  specialCost: 0
+  targetShouldBeSelected: 0
+  targetsAvialable: 0
+  visualEffectOnTarget: {fileID: 0}
+  visualEffectOnSelf: {fileID: 0}
+  bit:
+  - {fileID: 4590402075878799863}
+  - {fileID: -7495094836287112415}
+--- !u!114 &4590402075878799863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9129035563295054098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 834aed4bffd3df440b525d64b0e134fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShouldBeRemoved: 0
+  attacker: {fileID: 0}
+  modifier:
+    Value: -0.5
+    Type: 1
+    Order: 0
+  duration: 3
+  stat: 2
+--- !u!114 &-7495094836287112415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9129035563295054098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 834aed4bffd3df440b525d64b0e134fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShouldBeRemoved: 0
+  attacker: {fileID: 0}
+  modifier:
+    Value: -0.5
+    Type: 1
+    Order: 0
+  duration: 0
+  stat: 3

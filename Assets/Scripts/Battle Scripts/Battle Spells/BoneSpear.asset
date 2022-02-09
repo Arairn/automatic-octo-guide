@@ -18,8 +18,10 @@ MonoBehaviour:
   targetShouldBeSelected: 0
   targetsAvialable: 0
   visualEffectOnTarget: {fileID: 2479855763006821456, guid: c270c433de8995a4abb2a75aeda3b0eb, type: 3}
+  visualEffectOnSelf: {fileID: 0}
   elementaryEffects:
-  - damage: 10
+  - mindamage: 0
+    maxdamage: 10
     typeOfDamage: 1
     vampPercent: 0
     manaDrain: 0
